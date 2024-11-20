@@ -1,2 +1,2 @@
 # ShmeckleEngine
-My own personal game engine from scratch
+My own game engine
