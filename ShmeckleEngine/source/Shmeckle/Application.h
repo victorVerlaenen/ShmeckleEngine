@@ -12,7 +12,7 @@ namespace shmeckle
 		void Run();
 	};
 
-	// To be defined in CLIENT
+	// To be defined in the CLIENT
 	Application* CreateApplication();
 }
 

@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Shmeckle\Logger.h" />
     <ClInclude Include="source\Shmeckle.h" />
     <ClInclude Include="source\Shmeckle\Application.h" />
     <ClInclude Include="source\Shmeckle\Core.h" />
     <ClInclude Include="source\Shmeckle\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Shmeckle\Logger.cpp" />
     <ClCompile Include="source\Shmeckle\Application.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -67,6 +69,8 @@
       <PreprocessorDefinitions>SM_PLATFORM_WINDOWS;SM_BUILD_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)ShmeckleEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -82,6 +86,8 @@
       <PreprocessorDefinitions>SM_PLATFORM_WINDOWS;SM_BUILD_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)ShmeckleEngine\vendor\spdlog\include;</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
