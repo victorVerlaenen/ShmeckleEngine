@@ -1,3 +1,0 @@
-[submodule "ShmeckleEngine/vendor/spdlog"]
-	path = ShmeckleEngine/vendor/spdlog
-	url = https://github.com/gabime/spdlog.git
