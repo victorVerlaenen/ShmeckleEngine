@@ -1,3 +1,3 @@
-[submodule "ShmeckleEngine/vendor/spdlog"]
-	path = ShmeckleEngine/vendor/spdlog
+[submodule "Shmeckle/vendor/spdlog"]
+	path = Shmeckle/vendor/spdlog
 	url = https://github.com/gabime/spdlog

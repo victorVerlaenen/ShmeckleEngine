@@ -1,7 +1,9 @@
 # Directories
 .vs/
-bin/
-bin-int/
+build/
+install/
 
 # Files
 *.user
+CMakeSettings.json
+generate_and_build*.bat
