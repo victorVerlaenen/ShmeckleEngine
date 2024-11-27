@@ -4,6 +4,7 @@ project(Shmeckle)
 
 # Create a shared library
 add_library(Shmeckle SHARED
+    # General files
     source/Shmeckle.h
     source/Shmeckle/Core.h
     source/Shmeckle/EntryPoint.h
@@ -11,7 +12,12 @@ add_library(Shmeckle SHARED
     source/Shmeckle/Application.cpp
     source/Shmeckle/Logger.h
     source/Shmeckle/Logger.cpp
-)
+    # Event files
+    source/Shmeckle/Events/Event.h
+    source/Shmeckle/Events/ApplicationEvent.h
+    source/Shmeckle/Events/KeyEvent.h
+    source/Shmeckle/Events/MouseEvent.h
+ )
 
 # Include directories
 target_include_directories(Shmeckle PRIVATE

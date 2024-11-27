@@ -9,3 +9,7 @@
 #else
 	#error Shmeckle only supports windows
 #endif
+
+constexpr int Bit(int x) {
+	return 1 << x;
+}
