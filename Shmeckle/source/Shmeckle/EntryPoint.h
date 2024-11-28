@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef SMECKLE_PLATFORM_WINDOWS
+#ifdef SHMECKLE_PLATFORM_WINDOWS
 
 extern shmeckle::Application* shmeckle::CreateApplication();
 

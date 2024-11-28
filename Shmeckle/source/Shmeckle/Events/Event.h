@@ -1,7 +1,5 @@
 #pragma once
 #include "Shmeckle/Core.h"
-#include <string>
-#include <functional>
 
 namespace shmeckle
 {

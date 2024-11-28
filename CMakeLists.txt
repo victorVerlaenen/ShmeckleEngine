@@ -14,7 +14,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin-int)
 
 # Define platform-specific macros
 if(WIN32)
-    add_compile_definitions(SMECKLE_PLATFORM_WINDOWS)
+    add_compile_definitions(SHMECKLE_PLATFORM_WINDOWS)
 
     set(CMAKE_SYSTEM_VERSION "10.0")
     message(STATUS "Using Windows SDK version: ${CMAKE_SYSTEM_VERSION}")

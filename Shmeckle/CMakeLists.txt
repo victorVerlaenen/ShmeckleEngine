@@ -17,17 +17,25 @@ add_library(Shmeckle SHARED
     source/Shmeckle/Events/ApplicationEvent.h
     source/Shmeckle/Events/KeyEvent.h
     source/Shmeckle/Events/MouseEvent.h
- )
+)
 
 # Include directories
-target_include_directories(Shmeckle PRIVATE
-    vendor/spdlog/include
-    source # This is so that you can just include the Shmeckle.h header easily
+target_include_directories(Shmeckle 
+    PRIVATE
+        vendor/spdlog/include
+        source # This is so that you can just include the Shmeckle.h header easily
 )
 
 # Preprocessor definitions
-target_compile_definitions(Shmeckle PRIVATE
-    SMECKLE_BUILD_DLL
+target_compile_definitions(Shmeckle 
+    PRIVATE
+        SHMECKLE_BUILD_DLL
+)
+
+# Precompiled header
+target_precompile_headers(Shmeckle
+    PRIVATE
+        source/smpch.h
 )
 
 # Preprocessor definitions
