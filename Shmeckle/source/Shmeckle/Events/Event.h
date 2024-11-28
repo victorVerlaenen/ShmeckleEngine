@@ -36,6 +36,14 @@ namespace shmeckle
 		inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() & category; }
 
 	protected:
+		Event() = default;
+		virtual ~Event() = default;
+
+		Event(const Event& other) = delete;
+		Event& operator=(const Event& other) = delete;
+		Event(Event&& other) = delete;
+		Event& operator=(Event&& other) = delete;
+
 		bool m_Completed = false;
 
 	private:
@@ -50,6 +58,12 @@ namespace shmeckle
 		{
 
 		}
+		~EventDispatcher() = default;
+
+		EventDispatcher(const EventDispatcher& other) = delete;
+		EventDispatcher& operator=(const EventDispatcher& other) = delete;
+		EventDispatcher(EventDispatcher&& other) = delete;
+		EventDispatcher& operator=(EventDispatcher&& other) = delete;
 
 		template<typename EventClassType>
 		bool Dispatch(std::function<bool(EventClassType&)> function)

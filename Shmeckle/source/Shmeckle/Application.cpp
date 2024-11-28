@@ -7,6 +7,7 @@ namespace shmeckle
 {
 	Application::Application()
 	{
+		m_Window = Window::Create();
 	}
 
 	Application::~Application()
@@ -15,7 +16,9 @@ namespace shmeckle
 
 	void Application::Run()
 	{
-		WindowResizeEvent e(1280, 720);
+		m_IsRunning = true;
+
+		/*WindowResizeEvent e(1280, 720);
 		if (e.IsInCategory(EventCategoryApplication))
 		{
 			Logger::CoreInfo(e.ToString());
@@ -23,7 +26,11 @@ namespace shmeckle
 		if (e.IsInCategory(EventCategoryInput))
 		{
 			Logger::CoreInfo(e.ToString());
+		}*/
+
+		while (m_IsRunning)
+		{
+			m_Window->Update();
 		}
-		while (true);
 	}
 }

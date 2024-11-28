@@ -2,6 +2,20 @@
 
 project(Shmeckle)
 
+# Build GLFW as a static library
+set(GLFW_BUILD_STATIC ON CACHE BOOL "Build GLFW as a static library")
+
+# Disable building of GLFW examples, tests, and docs
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "Do not build GLFW examples")
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "Do not build GLFW tests")
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "Do not build GLFW documentation")
+
+# Add GLFW
+add_subdirectory(vendor/GLFW)
+
+# Add OpenGL if using GLFW for rendering
+find_package(OpenGL REQUIRED)
+
 # Create a shared library
 add_library(Shmeckle SHARED
     # General files
@@ -12,17 +26,30 @@ add_library(Shmeckle SHARED
     source/Shmeckle/Application.cpp
     source/Shmeckle/Logger.h
     source/Shmeckle/Logger.cpp
+    source/Shmeckle/Window.h
     # Event files
     source/Shmeckle/Events/Event.h
     source/Shmeckle/Events/ApplicationEvent.h
     source/Shmeckle/Events/KeyEvent.h
     source/Shmeckle/Events/MouseEvent.h
+    # Platform specifics
+    source/Platform/Windows/WindowsWindow.h
+    source/Platform/Windows/WindowsWindow.cpp
 )
+
+# Link GLFW and OpenGL
+target_link_libraries(Shmeckle 
+    PRIVATE 
+        glfw
+        OpenGL::GL
+)
+
 
 # Include directories
 target_include_directories(Shmeckle 
     PRIVATE
         vendor/spdlog/include
+        vendor/GLFW/include
         source # This is so that you can just include the Shmeckle.h header easily
 )
 
