@@ -21,16 +21,4 @@ namespace shmeckle
 	{
 
 	}
-
-	void Logger::CoreTrace(const std::string& text) { s_CoreLogger->trace(text); }
-	void Logger::CoreInfo(const std::string& text) { s_CoreLogger->info(text); }
-	void Logger::CoreWarning(const std::string& text) { s_CoreLogger->warn(text); }
-	void Logger::CoreError(const std::string& text) { s_CoreLogger->error(text); }
-	void Logger::CoreCritical(const std::string& text) { s_CoreLogger->critical(text); }
-
-	void Logger::Trace(const std::string& text) { s_ClientLogger->trace(text); }
-	void Logger::Info(const std::string& text) { s_ClientLogger->info(text); }
-	void Logger::Warning(const std::string& text) { s_ClientLogger->warn(text); }
-	void Logger::Error(const std::string& text) { s_ClientLogger->error(text); }
-	void Logger::Critical(const std::string& text) { s_ClientLogger->critical(text); }
 }
