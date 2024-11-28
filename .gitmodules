@@ -1,3 +1,6 @@
 [submodule "Shmeckle/vendor/spdlog"]
 	path = Shmeckle/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "Shmeckle/vendor/GLFW"]
+	path = Shmeckle/vendor/GLFW
+	url = https://github.com/victorVerlaenen/glfw.git
