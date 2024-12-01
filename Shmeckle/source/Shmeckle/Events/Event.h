@@ -1,5 +1,5 @@
 #pragma once
-#include "Shmeckle/Core.h"
+#include "Shmeckle\Core.h"
 
 namespace shmeckle
 {
@@ -53,7 +53,7 @@ namespace shmeckle
 	class EventDispatcher
 	{
 	public:
-		EventDispatcher(Event& event) 
+		EventDispatcher(Event& event)
 			: m_Event(event)
 		{
 
@@ -81,8 +81,8 @@ namespace shmeckle
 		Event& m_Event;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	inline std::ostream& operator<<(std::ostream& os, const Event& event)
 	{
-		return os << e.ToString();
+		return os << event.ToString();
 	}
 }
