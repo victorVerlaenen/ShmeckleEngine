@@ -1,9 +1,12 @@
 #pragma once
 #include "Core.h"
-#include "Window.h"
+#include <memory>
 
 namespace shmeckle
 {
+	class Event;
+	class Window;
+
 	class SHMECKLE_API Application
 	{
 	public:
@@ -16,6 +19,7 @@ namespace shmeckle
 		Application& operator=(Application&& other) = delete;
 
 		void Run();
+		void OnEvent(Event& event);
 
 	private:
 		std::unique_ptr<Window> m_Window{ nullptr };

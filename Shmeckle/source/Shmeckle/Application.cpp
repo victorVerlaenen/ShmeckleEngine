@@ -1,13 +1,23 @@
 #include "smpch.h"
 #include "Application.h"
-#include "Events/ApplicationEvent.h"
+
 #include "Logger.h"
+#include "Window.h"
+
+#include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
+
+#include "GLFW\glfw3.h"
 
 namespace shmeckle
 {
 	Application::Application()
 	{
 		m_Window = Window::Create();
+		m_Window->SetEventCallback([this](Event& event) 
+		{
+			OnEvent(event);
+		});
 	}
 
 	Application::~Application()
@@ -18,19 +28,17 @@ namespace shmeckle
 	{
 		m_IsRunning = true;
 
-		/*WindowResizeEvent e(1280, 720);
-		if (e.IsInCategory(EventCategoryApplication))
-		{
-			Logger::CoreInfo(e.ToString());
-		}
-		if (e.IsInCategory(EventCategoryInput))
-		{
-			Logger::CoreInfo(e.ToString());
-		}*/
-
 		while (m_IsRunning)
 		{
+			glClearColor(1, 0, 1, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
 			m_Window->Update();
 		}
 	}
+
+	void Application::OnEvent(Event& event)
+	{
+		Logger::CoreInfo("{0}", event);
+	}
+
 }
