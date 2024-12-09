@@ -23,9 +23,9 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::WindowResized; }
+		static inline Event::Type GetStaticType() { return Event::Type::WindowResized; }
 
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "WindowResized"; }
 		virtual inline int GetCategoryFlags() const override { return EventCategoryApplication; }
 
@@ -42,9 +42,9 @@ namespace shmeckle
 
 		}
 
-		static inline EventType GetStaticType() { return EventType::WindowClosed; }
+		static inline Event::Type GetStaticType() { return Event::Type::WindowClosed; }
 
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "WindowClosed"; }
 		virtual inline int GetCategoryFlags() const override { return EventCategoryApplication; }
 	};

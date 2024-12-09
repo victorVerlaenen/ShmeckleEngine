@@ -6,15 +6,15 @@ namespace shmeckle
 	class SHMECKLE_API MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(float x, float y) 
+		MouseMovedEvent(double x, double y) 
 			: m_MouseX(x), 
 			m_MouseY(y) 
 		{
 
 		}
 
-		inline float GetX() const { return m_MouseX; }
-		inline float GetY() const { return m_MouseY; }
+		inline double GetX() const { return m_MouseX; }
+		inline double GetY() const { return m_MouseY; }
 
 		std::string ToString() const override
 		{
@@ -23,28 +23,28 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::MouseMoved; }
+		static inline Event::Type GetStaticType() { return Event::Type::MouseMoved; }
 
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "MouseMoved"; }
 		virtual inline int GetCategoryFlags() const override { return EventCategoryMouse | EventCategoryInput; }
 
 	private:
-		float m_MouseX, m_MouseY;
+		double m_MouseX, m_MouseY;
 	};
 
 	class SHMECKLE_API MouseScrolledEvent : public Event
 	{
 	public:
-		MouseScrolledEvent(float xOffset, float yOffset) 
+		MouseScrolledEvent(double xOffset, double yOffset) 
 			: m_XOffset(xOffset), 
 			m_YOffset(yOffset) 
 		{
 
 		}
 
-		inline float GetXOffset() const { return m_XOffset; }
-		inline float GetYOffset() const { return m_YOffset; }
+		inline double GetXOffset() const { return m_XOffset; }
+		inline double GetYOffset() const { return m_YOffset; }
 
 		std::string ToString() const override
 		{
@@ -53,9 +53,9 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::MouseScrolled; }
+		static inline Event::Type GetStaticType() { return Event::Type::MouseScrolled; }
 
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override	{ return "MouseScrolled"; }
 		virtual inline int GetCategoryFlags() const override { return EventCategoryMouse | EventCategoryInput; }
 
@@ -96,8 +96,8 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::MouseButtonPressed; }
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		static inline Event::Type GetStaticType() { return Event::Type::MouseButtonPressed; }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "MouseButtonPressed"; }
 	};
 
@@ -117,9 +117,9 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::MouseButtonReleased; }
+		static inline Event::Type GetStaticType() { return Event::Type::MouseButtonReleased; }
 
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "MouseButtonReleased"; }
 	};
 }

@@ -29,9 +29,10 @@ add_library(Shmeckle SHARED
     source/Shmeckle/Window.h
     # Event files
     source/Shmeckle/Events/Event.h
-    source/Shmeckle/Events/ApplicationEvent.h
-    source/Shmeckle/Events/KeyEvent.h
-    source/Shmeckle/Events/MouseEvent.h
+    source/Shmeckle/Events/Event.cpp
+    source/Shmeckle/Events/ApplicationEvents.h
+    source/Shmeckle/Events/KeyEvents.h
+    source/Shmeckle/Events/MouseEvents.h
     # Platform specifics
     source/Platform/Windows/WindowsWindow.h
     source/Platform/Windows/WindowsWindow.cpp

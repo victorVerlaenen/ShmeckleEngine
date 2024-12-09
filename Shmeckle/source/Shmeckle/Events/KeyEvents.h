@@ -45,9 +45,9 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::KeyPressed; }
+		static inline Event::Type GetStaticType() { return Event::Type::KeyPressed; }
 
-		virtual inline EventType GetEventType() const override 	{ return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override 	{ return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "KeyPressed"; }
 
 	private:
@@ -69,9 +69,9 @@ namespace shmeckle
 			return ss.str();
 		}
 
-		static inline EventType GetStaticType() { return EventType::KeyReleased; }
+		static inline Event::Type GetStaticType() { return Event::Type::KeyReleased; }
 
-		virtual inline EventType GetEventType() const override { return GetStaticType(); }
+		virtual inline Event::Type GetEventType() const override { return GetStaticType(); }
 		virtual inline const char* GetName() const override { return "KeyReleased"; }
 	};
 }

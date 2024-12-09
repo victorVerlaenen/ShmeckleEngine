@@ -16,14 +16,14 @@ namespace shmeckle
 		inline virtual unsigned int GetWidth() const override { return m_Data.width; }
 		inline virtual unsigned int GetHeight() const override { return m_Data.height; }
 
-		inline virtual void SetEventCallback(const std::function<void(Event&)>& callback) override { m_Data.eventCallback = callback; }
+		//inline virtual void SetEventCallback(const std::function<void(Event&)>& callback) override { m_Data.eventCallback = callback; }
 		virtual void SetVSync(bool enabled) override;
 		virtual bool IsVSync() const override;
 
 	private:
 		struct WindowData
 		{
-			std::function<void(Event&)> eventCallback;
+			//std::function<void(Event&)> eventCallback;
 			unsigned int width;
 			unsigned int height;
 			std::string title;

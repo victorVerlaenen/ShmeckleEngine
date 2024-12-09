@@ -22,7 +22,7 @@ namespace shmeckle
 		void OnEvent(Event& event);
 
 	private:
-		std::unique_ptr<Window> m_Window{ nullptr };
+		std::unique_ptr<Window> m_upWindow{ nullptr };
 		bool m_IsRunning{ false };
 	};
 

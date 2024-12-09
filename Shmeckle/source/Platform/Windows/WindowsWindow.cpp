@@ -1,9 +1,9 @@
 #include "smpch.h"
 #include "WindowsWindow.h"
 #include "Shmeckle/Logger.h"
-#include "Shmeckle/Events/ApplicationEvent.h"
-#include "Shmeckle/Events/KeyEvent.h"
-#include "Shmeckle/Events/MouseEvent.h"
+#include "Shmeckle/Events/ApplicationEvents.h"
+#include "Shmeckle/Events/KeyEvents.h"
+#include "Shmeckle/Events/MouseEvents.h"
 
 namespace shmeckle
 {
@@ -12,6 +12,7 @@ namespace shmeckle
 	// Platform specific implementation that created the correct window
 	std::unique_ptr<Window> Window::Create(const WindowProperties& properties)
 	{
+		// This implicitly moves because it is a temporary object and those are implicitly rvalues
 		return std::make_unique<WindowsWindow>(properties);
 	}
 
@@ -49,42 +50,48 @@ namespace shmeckle
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
 		{
-			WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			/*WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 			data.width = width;
 			data.height = height;
 
 			WindowResizeEvent event{ static_cast<unsigned int>(width), static_cast<unsigned int>(height) };
-			data.eventCallback(event);
+			data.eventCallback(event);*/
+			EventBus::Instance().QueueEvent(std::move(std::make_unique<WindowResizeEvent>(static_cast<unsigned int>(width), static_cast<unsigned int>(height))));
 		});
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 		{
-			WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			/*WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 			WindowCloseEvent event{};
-			data.eventCallback(event);
+			data.eventCallback(event);*/
+			EventBus::Instance().QueueEvent(std::move(std::make_unique<WindowCloseEvent>()));
 		});
 
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
-			WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			//WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			EventBus& eventBus = EventBus::Instance();
 			switch (action)
 			{
 				case GLFW_PRESS:
 				{
-					KeyPressedEvent event{ key, 0 };
-					data.eventCallback(event);
+					/*KeyPressedEvent event{ key, 0 };
+					data.eventCallback(event);*/
+					eventBus.QueueEvent(std::move(std::make_unique<KeyPressedEvent>(key, false)));
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					KeyReleasedEvent event{ key };
-					data.eventCallback(event);
+					/*KeyReleasedEvent event{ key };
+					data.eventCallback(event);*/
+					eventBus.QueueEvent(std::move(std::make_unique<KeyReleasedEvent>(key)));
 					break;
 				}
 				case GLFW_REPEAT:
 				{
-					KeyPressedEvent event{ key, 1 };
-					data.eventCallback(event);
+					/*KeyPressedEvent event{ key, 1 };
+					data.eventCallback(event);*/
+					eventBus.QueueEvent(std::move(std::make_unique<KeyPressedEvent>(key, true)));
 					break;
 				}
 			}
@@ -92,19 +99,22 @@ namespace shmeckle
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
-			WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			//WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			EventBus& eventBus = EventBus::Instance();
 			switch (action)
 			{
 				case GLFW_PRESS:
 				{
-					MouseButtonPressedEvent event{ button };
-					data.eventCallback(event);
+					/*MouseButtonPressedEvent event{ button };
+					data.eventCallback(event);*/
+					eventBus.QueueEvent(std::move(std::make_unique<MouseButtonPressedEvent>(button)));
 					break;
 				}
 				case GLFW_RELEASE:
 				{
-					MouseButtonReleasedEvent event{ button };
-					data.eventCallback(event);
+					/*MouseButtonReleasedEvent event{ button };
+					data.eventCallback(event);*/
+					eventBus.QueueEvent(std::move(std::make_unique<MouseButtonReleasedEvent>(button)));
 					break;
 				}
 			}
@@ -112,16 +122,18 @@ namespace shmeckle
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
-			WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			/*WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 			MouseScrolledEvent event(static_cast<float>(xOffset), static_cast<float>(yOffset));
-			data.eventCallback(event);
+			data.eventCallback(event);*/
+			EventBus::Instance().QueueEvent(std::move(std::make_unique<MouseScrolledEvent>(xOffset, yOffset)));
 		});
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 		{
-			WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
+			/*WindowData& data = *static_cast<WindowData*>(glfwGetWindowUserPointer(window));
 			MouseMovedEvent event(static_cast<float>(xPos), static_cast<float>(yPos));
-			data.eventCallback(event);
+			data.eventCallback(event);*/
+			EventBus::Instance().QueueEvent(std::move(std::make_unique<MouseMovedEvent>(xPos, yPos)));
 		});
 	}
 

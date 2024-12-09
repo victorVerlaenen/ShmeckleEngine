@@ -5,7 +5,6 @@
 #include "Window.h"
 
 #include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
 
 #include "GLFW\glfw3.h"
 
@@ -13,8 +12,50 @@ namespace shmeckle
 {
 	Application::Application()
 	{
-		m_Window = Window::Create();
-		m_Window->SetEventCallback([this](Event& event) 
+		EventBus::Initialize();
+
+		m_upWindow = Window::Create();
+		/*m_upWindow->SetEventCallback([this](Event& event) 
+		{
+			OnEvent(event);
+		});*/
+
+		EventBus::Instance().RegisterListener(Event::Type::MouseButtonPressed, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::WindowResized, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::WindowClosed, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::MouseButtonReleased, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::MouseScrolled, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::MouseMoved, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::KeyPressed, [this](Event& event)
+		{
+			OnEvent(event);
+		});
+
+		EventBus::Instance().RegisterListener(Event::Type::KeyReleased, [this](Event& event)
 		{
 			OnEvent(event);
 		});
@@ -22,6 +63,7 @@ namespace shmeckle
 
 	Application::~Application()
 	{
+		EventBus::CleanUp();
 	}
 
 	void Application::Run()
@@ -30,9 +72,11 @@ namespace shmeckle
 
 		while (m_IsRunning)
 		{
+			EventBus::Instance().DispatchEvents();
+
 			glClearColor(1, 0, 1, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
-			m_Window->Update();
+			m_upWindow->Update();
 		}
 	}
 
