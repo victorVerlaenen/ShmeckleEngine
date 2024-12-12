@@ -69,7 +69,26 @@ namespace shmeckle
 			EventCallback callback;
 		};
 
-		int RegisterListener(Event::Type type, EventCallback callback);
+		template<typename EventClassType>
+		int RegisterListener(std::function<void(EventClassType&)> callback)
+		{
+			//static_assert(std::is_base_of<Event, EventClassType>::value, "EventClassType must derive from Event");
+
+			Event::Type type = EventClassType::GetStaticType();
+
+			int id = GenerateUniqueID();
+
+			// Wrap the specific callback into a generic one
+			EventCallback wrappedCallback = [callback](Event& baseEvent)
+			{
+				// Perform a runtime cast to ensure the baseEvent is of the correct type
+				EventClassType& specificEvent = static_cast<EventClassType&>(baseEvent);
+				callback(specificEvent);
+			};
+
+			m_Listeners[type].push_back({ id, wrappedCallback });
+			return id;
+		}
 
 		void UnregisterListener(Event::Type type, int id);
 

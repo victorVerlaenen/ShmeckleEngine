@@ -5,6 +5,7 @@
 namespace shmeckle
 {
 	class Event;
+	class WindowCloseEvent;
 	class Window;
 
 	class SHMECKLE_API Application
@@ -22,6 +23,8 @@ namespace shmeckle
 		void OnEvent(Event& event);
 
 	private:
+		bool OnWindowClose(WindowCloseEvent& event);
+
 		std::unique_ptr<Window> m_upWindow{ nullptr };
 		bool m_IsRunning{ false };
 	};

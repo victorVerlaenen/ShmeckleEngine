@@ -38,6 +38,18 @@ add_library(Shmeckle SHARED
     source/Platform/Windows/WindowsWindow.cpp
 )
 
+# Add VLD 
+set(VLD_BASE_PATH "C:/Program Files (x86)/Visual Leak Detector")
+
+if(EXISTS "${VLD_BASE_PATH}/include" AND EXISTS "${VLD_BASE_PATH}/lib/Win64/vld.lib")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DEBUG")
+    target_include_directories(Shmeckle PRIVATE "${VLD_BASE_PATH}/include")
+    target_link_libraries(Shmeckle PRIVATE "${VLD_BASE_PATH}/lib/Win64/vld.lib")
+    target_compile_definitions(Shmeckle PRIVATE VLD_AVAILABLE)
+else()
+    message(WARNING "Visual Leak Detector not found. Skipping its configuration.")
+endif()
+
 # Link GLFW and OpenGL
 target_link_libraries(Shmeckle 
     PRIVATE 

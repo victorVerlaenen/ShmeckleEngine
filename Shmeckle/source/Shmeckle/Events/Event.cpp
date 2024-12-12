@@ -34,13 +34,6 @@ namespace shmeckle
 		return *s_pInstance;
 	}
 
-	int EventBus::RegisterListener(Event::Type type, EventCallback callback)
-	{
-		int id = GenerateUniqueID();
-		m_Listeners[type].push_back({ id, callback });
-		return id;
-	}
-
 	void EventBus::UnregisterListener(Event::Type type, int id)
 	{
 		auto& listeners = m_Listeners[type];
