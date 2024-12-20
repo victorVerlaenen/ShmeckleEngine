@@ -20,3 +20,5 @@
 #include <algorithm>
 #include <functional>
 
+// Shmeckle includes
+#include "Shmeckle\Logger.h"

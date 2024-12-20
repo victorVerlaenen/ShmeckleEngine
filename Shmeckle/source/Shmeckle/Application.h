@@ -2,11 +2,16 @@
 #include "Core.h"
 #include <memory>
 
+#include "Layers\LayerStack.h"
+
 namespace shmeckle
 {
+	class Window;
+
 	class Event;
 	class WindowCloseEvent;
-	class Window;
+	
+	class Layer;
 
 	class SHMECKLE_API Application
 	{
@@ -22,11 +27,14 @@ namespace shmeckle
 		void Run();
 		void OnEvent(Event& event);
 
+		void PushLayer(Layer* layer);
+		void PushOverlayLayer(Layer* layer);
 	private:
 		bool OnWindowClose(WindowCloseEvent& event);
 
 		std::unique_ptr<Window> m_upWindow{ nullptr };
 		bool m_IsRunning{ false };
+		LayerStack m_LayerStack;
 	};
 
 	// To be defined in the CLIENT

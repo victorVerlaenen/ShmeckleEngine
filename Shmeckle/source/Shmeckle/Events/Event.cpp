@@ -1,6 +1,5 @@
 #include "smpch.h"
 #include "Event.h"
-#include "Shmeckle\Logger.h"
 
 namespace shmeckle
 {

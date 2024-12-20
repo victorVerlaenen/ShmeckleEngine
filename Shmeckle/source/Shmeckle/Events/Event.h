@@ -15,7 +15,6 @@ namespace shmeckle
 			MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled        // Found in MouseEvent.h
 		};
 
-		// This is here to make sure you can check for all Input events for example, without having to check every one separately
 		// Look at 'Core.h' for the definition of Bit(x)
 		enum Category
 		{
@@ -49,7 +48,6 @@ namespace shmeckle
 		bool m_Completed = false;
 
 	private:
-		//friend class EventDispatcher;
 		friend class EventBus;
 	};
 

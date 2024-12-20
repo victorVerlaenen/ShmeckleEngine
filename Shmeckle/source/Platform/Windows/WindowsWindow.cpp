@@ -1,6 +1,5 @@
 #include "smpch.h"
 #include "WindowsWindow.h"
-#include "Shmeckle/Logger.h"
 #include "Shmeckle/Events/ApplicationEvents.h"
 #include "Shmeckle/Events/KeyEvents.h"
 #include "Shmeckle/Events/MouseEvents.h"

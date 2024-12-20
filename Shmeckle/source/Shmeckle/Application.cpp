@@ -1,7 +1,6 @@
 #include "smpch.h"
 #include "Application.h"
 
-#include "Logger.h"
 #include "Window.h"
 
 #include "Events\Event.h"
@@ -26,44 +25,9 @@ namespace shmeckle
 
 		m_upWindow = Window::Create();
 
-		EventBus::Instance().RegisterListener<MouseButtonPressedEvent>([this](MouseButtonPressedEvent& event)
-		{
-			OnEvent(event);
-		});
-
-		EventBus::Instance().RegisterListener<WindowResizeEvent>([this](WindowResizeEvent& event)
-		{
-			OnEvent(event);
-		});
-
 		EventBus::Instance().RegisterListener<WindowCloseEvent>([this](WindowCloseEvent& event)
 		{
 			OnWindowClose(event);
-		});
-
-		EventBus::Instance().RegisterListener<MouseButtonReleasedEvent>([this](MouseButtonReleasedEvent& event)
-		{
-			OnEvent(event);
-		});
-
-		EventBus::Instance().RegisterListener<MouseScrolledEvent>([this](MouseScrolledEvent& event)
-		{
-			OnEvent(event);
-		});
-
-		EventBus::Instance().RegisterListener<MouseMovedEvent>([this](MouseMovedEvent& event)
-		{
-			OnEvent(event);
-		});
-
-		EventBus::Instance().RegisterListener<KeyPressedEvent>([this](KeyPressedEvent& event)
-		{
-			OnEvent(event);
-		});
-
-		EventBus::Instance().RegisterListener<KeyReleasedEvent>([this](KeyReleasedEvent& event)
-		{
-			OnEvent(event);
 		});
 	}
 
@@ -95,5 +59,15 @@ namespace shmeckle
 	{
 		m_IsRunning = false;
 		return true;
+	}
+
+	void Application::PushLayer(Layer* layer)
+	{
+		m_LayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlayLayer(Layer* layer)
+	{
+		m_LayerStack.PushOverlayLayer(layer);
 	}
 }

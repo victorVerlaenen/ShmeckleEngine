@@ -27,6 +27,10 @@ add_library(Shmeckle SHARED
     source/Shmeckle/Logger.h
     source/Shmeckle/Logger.cpp
     source/Shmeckle/Window.h
+    source/Shmeckle/Layers/Layer.h
+    source/Shmeckle/Layers/Layer.cpp
+    source/Shmeckle/Layers/LayerStack.h
+    source/Shmeckle/Layers/LayerStack.cpp
     # Event files
     source/Shmeckle/Events/Event.h
     source/Shmeckle/Events/Event.cpp
