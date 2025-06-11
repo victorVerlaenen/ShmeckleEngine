@@ -1,8 +1,5 @@
 # Directories
 .vs/
-build/
-install/
 
 # Files
 *.user
-CMakeSettings.json
