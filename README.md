@@ -1,10 +1,10 @@
 # Shmeckle Engine
 Shmeckle Engine is a lightweight game engine project aimed at learning and implementing key principles of engine development. It currently supports x64 architectures and windows.
 ## Setup
-**1. Clone the repository**
-**2. Add a new project and set is as startup**
-**3. Build the engine and link your client application to the engines dll**
-**4. For now you will have to copy the dll into the client's executable folder
+**1. Clone the repository**<br>
+**2. Add a new project and set is as startup**<br>
+**3. Build the engine and link your client application to the engines dll**<br>
+**4. For now you will have to copy the dll into the client's executable folder<br>
 
 ## Making your own application
 **1. Include** ```"Shmeckle.h"```<br>
