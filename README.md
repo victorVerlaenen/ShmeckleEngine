@@ -7,10 +7,10 @@ Shmeckle Engine is a lightweight game engine project aimed at learning and imple
 **4. For now you will have to copy the dll into the client's executable folder
 
 ## Making your own application
-**1. Include** ```"Shmeckle.h"```
-**2. Inherit from** ```Shmeckle::Application```
-**3. Implement the entrypoint factory**
-In your application (for example: ```SandboxApplication.cpp```)
+**1. Include** ```"Shmeckle.h"```<br>
+**2. Inherit from** ```Shmeckle::Application```<br>
+**3. Implement the entrypoint factory**<br>
+In your application (for example: ```SandboxApplication.cpp```)<br>
 ```
 #include "Shmeckle.h"
 
