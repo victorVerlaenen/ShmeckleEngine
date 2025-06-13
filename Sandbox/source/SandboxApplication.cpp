@@ -1,12 +1,20 @@
+#include "Shmeckle.h"
 
-namespace Shmeckle
+class SandboxApplication : public Shmeckle::Application
 {
+public:
+	SandboxApplication()
+	{
 
-	_declspec(dllimport) void Print();
+	}
 
-}
+	~SandboxApplication()
+	{
 
-int main()
+	}
+};
+
+Shmeckle::Application* Shmeckle::CreateApplication()
 {
-	Shmeckle::Print();
+	return new SandboxApplication();
 }
