@@ -90,3 +90,16 @@ namespace Shmeckle
 	};
 
 }
+
+// Logging macros
+#define SM_TRACE(...) ::Shmeckle::Logger::Trace(__VA_ARGS__)
+#define SM_INFO(...) ::Shmeckle::Logger::Info(__VA_ARGS__)
+#define SM_WARNING(...) ::Shmeckle::Logger::Warning(__VA_ARGS__)
+#define SM_ERROR(...) ::Shmeckle::Logger::Error(__VA_ARGS__)
+#define SM_CRITICAL(...) ::Shmeckle::Logger::Critical(__VA_ARGS__)
+
+#define SM_TRACE_CORE(...) ::Shmeckle::Logger::TraceCore(__VA_ARGS__)
+#define SM_INFO_CORE(...) ::Shmeckle::Logger::InfoCore(__VA_ARGS__)
+#define SM_WARNING_CORE(...) ::Shmeckle::Logger::WarningCore(__VA_ARGS__)
+#define SM_ERROR_CORE(...) ::Shmeckle::Logger::ErrorCore(__VA_ARGS__)
+#define SM_CRITICAL_CORE(...) ::Shmeckle::Logger::CriticalCore(__VA_ARGS__)
