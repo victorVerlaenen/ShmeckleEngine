@@ -18,6 +18,12 @@ namespace Shmeckle
 		inline static void Error(const std::string& formatedString) { sClientLogger_->error(formatedString); }
 		inline static void Critical(const std::string& formatedString) { sClientLogger_->critical(formatedString); }
 
+		inline static void TraceCore(const std::string& formatedString) { sCoreLogger_->trace(formatedString); }
+		inline static void InfoCore(const std::string& formatedString) { sCoreLogger_->info(formatedString); }
+		inline static void WarningCore(const std::string& formatedString) { sCoreLogger_->warn(formatedString); }
+		inline static void ErrorCore(const std::string& formatedString) { sCoreLogger_->error(formatedString); }
+		inline static void CriticalCore(const std::string& formatedString) { sCoreLogger_->critical(formatedString); }
+
 	private:
 		static std::shared_ptr<spdlog::logger> sCoreLogger_;
 		static std::shared_ptr<spdlog::logger> sClientLogger_;
@@ -69,6 +75,31 @@ namespace Shmeckle
 	void Logger::Critical(const std::string& formatedString)
 	{
 		supLoggerPimpl_->Critical(formatedString);
+	}
+
+	void Logger::TraceCore(const std::string& formatedString)
+	{
+		supLoggerPimpl_->TraceCore(formatedString);
+	}
+
+	void Logger::InfoCore(const std::string& formatedString)
+	{
+		supLoggerPimpl_->InfoCore(formatedString);
+	}
+
+	void Logger::WarningCore(const std::string& formatedString)
+	{
+		supLoggerPimpl_->WarningCore(formatedString);
+	}
+
+	void Logger::ErrorCore(const std::string& formatedString)
+	{
+		supLoggerPimpl_->ErrorCore(formatedString);
+	}
+
+	void Logger::CriticalCore(const std::string& formatedString)
+	{
+		supLoggerPimpl_->CriticalCore(formatedString);
 	}
 
 }
