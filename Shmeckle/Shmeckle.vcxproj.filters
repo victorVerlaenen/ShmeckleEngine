@@ -4,6 +4,9 @@
     <Filter Include="Shmeckle">
       <UniqueIdentifier>{D1135260-BDE0-AC6B-E6F9-9A13D225E2F9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shmeckle\Events">
+      <UniqueIdentifier>{952A1320-01B6-80E4-0AC7-03D976D1DCE4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shmeckle.h" />
@@ -15,6 +18,12 @@
     </ClInclude>
     <ClInclude Include="source\Shmeckle\EntryPoint.h">
       <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\Event.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\KeyEvent.h">
+      <Filter>Shmeckle\Events</Filter>
     </ClInclude>
     <ClInclude Include="source\Shmeckle\Logger.h">
       <Filter>Shmeckle</Filter>

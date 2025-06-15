@@ -31,7 +31,8 @@ project "Shmeckle"
 
 	includedirs
 	{
-		"%{prj.name}/dependencies/spdlog/include"
+		"%{prj.name}/dependencies/spdlog/include",
+		"%{prj.name}/source"
 	}
 
 	externalincludedirs
