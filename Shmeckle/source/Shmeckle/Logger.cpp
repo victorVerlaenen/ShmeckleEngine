@@ -1,7 +1,9 @@
+#include <format>
+
 #include "Logger.h"
+
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
-#include <format>
 
 namespace Shmeckle
 {

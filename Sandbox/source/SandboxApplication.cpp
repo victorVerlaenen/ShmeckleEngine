@@ -5,7 +5,7 @@ class SandboxApplication : public Shmeckle::Application
 public:
 	SandboxApplication()
 	{
-
+		std::unique_ptr<int> p {new int};
 	}
 
 	~SandboxApplication()

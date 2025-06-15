@@ -4,10 +4,10 @@
 namespace Shmeckle
 {
 
-	class SM_API Application
+	class SHM_API Application
 	{
 	public:
-		Application();
+		Application() noexcept;
 		virtual ~Application();
 
 		void Run();
