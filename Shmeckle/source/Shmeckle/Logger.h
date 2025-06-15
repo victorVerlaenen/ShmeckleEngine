@@ -16,61 +16,61 @@ namespace Shmeckle
 		static std::unique_ptr<LoggerPimpl> supLoggerPimpl_;
 
 	public:
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void Trace(std::format_string<Args...> fmtString, Args&&... args)
 		{ 
 			Trace(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void Info(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Info(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void Warning(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Warning(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void Error(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Error(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void Critical(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Critical(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void TraceCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Trace(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void InfoCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Info(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void WarningCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Warning(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void ErrorCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Error(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
-		template<class... Args>
+		template<typename... Args>
 		SHM_API inline static void CriticalCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Critical(std::format(fmtString, std::forward<Args>(args)...));
