@@ -3,7 +3,7 @@
 namespace Shmeckle
 {
 
-	Application::Application() noexcept
+	Application::Application()
 	{
 	}
 

@@ -8,7 +8,7 @@ namespace Shmeckle
 	class SHM_API Application
 	{
 	public:
-		Application() noexcept;
+		Application();
 		virtual ~Application();
 
 		Application(const Application& other) = delete;
@@ -21,4 +21,5 @@ namespace Shmeckle
 
 	// Needs to be defined in client
 	std::unique_ptr<Application> CreateApplication();
+
 }
