@@ -3,18 +3,23 @@
 class SandboxApplication : public Shmeckle::Application
 {
 public:
-	SandboxApplication()
+	SandboxApplication() noexcept
 	{
-		std::unique_ptr<int> p {new int};
+		
 	}
 
 	~SandboxApplication()
 	{
 
 	}
+
+	SandboxApplication(const SandboxApplication& other) = delete;
+	SandboxApplication(SandboxApplication&& other) = delete;
+	SandboxApplication& operator=(const SandboxApplication& other) = delete;
+	SandboxApplication& operator=(SandboxApplication&& other) = delete;
 };
 
-Shmeckle::Application* Shmeckle::CreateApplication()
+std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication()
 {
-	return new SandboxApplication();
+	return std::make_unique<SandboxApplication>();
 }

@@ -1,18 +1,18 @@
 #pragma once
 
 #ifdef SHM_PLATFORM_WINDOWS
+#include <memory>
 
 // This will be defined somewhere in a client application
-extern Shmeckle::Application* Shmeckle::CreateApplication();
+extern std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication();
 
-int main(int argc, char** argv)
+int main(int /*argc*/, char** /*argv*/)
 {
-	(void)argc; (void)argv;
-
-	auto pApp = Shmeckle::CreateApplication();
-	pApp->Run();
-
-	delete pApp;
+	auto upApp = Shmeckle::CreateApplication();
+	if (upApp)
+	{
+		upApp->Run();
+	}
 }
 
 #endif

@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include <memory>
 
 namespace Shmeckle
 {
@@ -10,9 +11,14 @@ namespace Shmeckle
 		Application() noexcept;
 		virtual ~Application();
 
+		Application(const Application& other) = delete;
+		Application(Application&& other) = delete;
+		Application& operator=(const Application& other) = delete;
+		Application& operator=(Application&& other) = delete;
+
 		void Run();
 	};
 
 	// Needs to be defined in client
-	Application* CreateApplication();
+	std::unique_ptr<Application> CreateApplication();
 }
