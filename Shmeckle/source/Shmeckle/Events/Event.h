@@ -51,20 +51,40 @@ namespace Shmeckle
 
 		static EventBus& Instance();
 
-		template<typename EventType>
-		void Subscribe(std::function<bool(EventType&)> callback)
+		template<typename EventClassType>
+		void Subscribe(std::function<bool(EventClassType&)> callback)
 		{
-			subscribers_[EventType::GetStaticType()].push_back(callback);
+			static_assert(std::is_base_of<Event, EventClassType>::value, "\"EventType\" must be an Event");
+
+			subscribers_[EventClassType::GetStaticType()].push_back(callback);
+			// TODO : complete
 		}
 
 		void Publish(std::unique_ptr<Event> event)
 		{
 			eventQueue_.push(std::move(event));
+			// TODO : complete
 		}
 
-		void DispatchEvents() // Shiould happen somewhere at the end of a frame
+		void DispatchEvents()
 		{
-			// Dispatch all events
+			std::unique_ptr<Event> upEvaluatedEvent{ nullptr };
+			EventType evaluatedEventType{ EventType::None };
+
+			while (!eventQueue_.empty())
+			{
+				upEvaluatedEvent = std::move(eventQueue_.front());
+				evaluatedEventType = upEvaluatedEvent->GetEventType();
+				eventQueue_.pop();
+
+				for (std::function<bool(Event&)> callback : subscribers_[evaluatedEventType])
+				{
+					if (callback(*upEvaluatedEvent))
+					{
+						break;
+					}
+				}
+			}
 		}
 
 	private:
