@@ -1,5 +1,5 @@
 #pragma once
-#include "Core.h"
+#include "Shmeckle/Core.h"
 #include "Event.h"
 
 #include <format>

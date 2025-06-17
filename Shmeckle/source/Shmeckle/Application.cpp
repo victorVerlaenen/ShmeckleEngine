@@ -1,10 +1,12 @@
 #include "Application.h"
+#include "Events\Event.h"
 
 namespace Shmeckle
 {
 
 	Application::Application()
 	{
+		EventBus::Initialize();
 	}
 
 	Application::~Application()
@@ -13,7 +15,10 @@ namespace Shmeckle
 
 	void Application::Run()
 	{
-		while(true);
+		while (true)
+		{
+			EventBus::Instance().DispatchEvents();
+		}
 	}
 
 }

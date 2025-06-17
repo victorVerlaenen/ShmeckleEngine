@@ -3,6 +3,7 @@
 #include <string>
 #include <functional>
 #include <queue>
+#include <memory>
 
 namespace Shmeckle
 {
@@ -43,52 +44,41 @@ namespace Shmeckle
 		bool isHandled_{ false };
 	};
 
-	class SHM_API EventBus
+	class EventBus
 	{
 	public:
-		void Initialize();
-		void CleanUp();
+		SHM_API static void Initialize();
+		SHM_API static void CleanUp();
 
-		static EventBus& Instance();
+		SHM_API static EventBus& Instance();
 
 		template<typename EventClassType>
-		void Subscribe(std::function<bool(EventClassType&)> callback)
+		SHM_API void Subscribe(std::function<bool(EventClassType&)> callback)
 		{
-			static_assert(std::is_base_of<Event, EventClassType>::value, "\"EventType\" must be an Event");
+			static_assert(std::is_base_of<Event, EventClassType>::value, "\"EventClassType\" must be an Event");
 
-			subscribers_[EventClassType::GetStaticType()].push_back(callback);
-			// TODO : complete
+			auto wrapper
+			{
+				[callback](Event& event)->bool
+				{
+					return callback(static_cast<EventClassType&>(event));
+				}
+			};
+
+			subscribers_[EventClassType::GetStaticType()].push_back(wrapper);
 		}
 
-		void Publish(std::unique_ptr<Event> event)
+		SHM_API inline void Publish(std::unique_ptr<Event> event)
 		{
 			eventQueue_.push(std::move(event));
-			// TODO : complete
 		}
 
-		void DispatchEvents()
-		{
-			std::unique_ptr<Event> upEvaluatedEvent{ nullptr };
-			EventType evaluatedEventType{ EventType::None };
-
-			while (!eventQueue_.empty())
-			{
-				upEvaluatedEvent = std::move(eventQueue_.front());
-				evaluatedEventType = upEvaluatedEvent->GetEventType();
-				eventQueue_.pop();
-
-				for (std::function<bool(Event&)> callback : subscribers_[evaluatedEventType])
-				{
-					if (callback(*upEvaluatedEvent))
-					{
-						break;
-					}
-				}
-			}
-		}
+		SHM_API void DispatchEvents();
 
 	private:
-		std::unordered_map<EventType, std::vector<std::function<bool(Event&)>>> subscribers_;
-		std::queue<std::unique_ptr<Event>> eventQueue_;
+		EventBus() = default;
+
+		std::unordered_map<EventType, std::vector<std::function<bool(Event&)>>> subscribers_{};
+		std::queue<std::unique_ptr<Event>> eventQueue_{};
 	};
 }

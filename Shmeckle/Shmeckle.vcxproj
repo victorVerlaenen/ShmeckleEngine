@@ -211,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp" />
+    <ClCompile Include="source\Shmeckle\Events\Event.cpp" />
     <ClCompile Include="source\Shmeckle\Logger.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

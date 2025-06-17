@@ -33,6 +33,9 @@
     <ClCompile Include="source\Shmeckle\Application.cpp">
       <Filter>Shmeckle</Filter>
     </ClCompile>
+    <ClCompile Include="source\Shmeckle\Events\Event.cpp">
+      <Filter>Shmeckle\Events</Filter>
+    </ClCompile>
     <ClCompile Include="source\Shmeckle\Logger.cpp">
       <Filter>Shmeckle</Filter>
     </ClCompile>
