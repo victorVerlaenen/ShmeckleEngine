@@ -1,8 +1,8 @@
 #pragma once
+#include <format>
+
 #include "Shmeckle/Core.h"
 #include "Event.h"
-
-#include <format>
 
 namespace Shmeckle
 {

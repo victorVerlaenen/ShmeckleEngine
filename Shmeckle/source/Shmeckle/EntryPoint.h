@@ -1,7 +1,7 @@
 #pragma once
+#include <memory>
 
 #ifdef SHM_PLATFORM_WINDOWS
-#include <memory>
 
 // This will be defined somewhere in a client application
 extern std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication();

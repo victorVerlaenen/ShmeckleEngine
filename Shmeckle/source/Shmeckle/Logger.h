@@ -1,7 +1,8 @@
 #pragma once
 #include <memory>
-#include "Core.h"
 #include <format>
+
+#include "Core.h"
 
 namespace Shmeckle
 {
@@ -18,7 +19,7 @@ namespace Shmeckle
 	public:
 		template<typename... Args>
 		SHM_API inline static void Trace(std::format_string<Args...> fmtString, Args&&... args)
-		{ 
+		{
 			Trace(std::format(fmtString, std::forward<Args>(args)...));
 		}
 

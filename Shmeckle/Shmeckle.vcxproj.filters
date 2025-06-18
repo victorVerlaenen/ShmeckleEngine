@@ -25,10 +25,13 @@
     <ClInclude Include="source\Shmeckle\Events\KeyEvent.h">
       <Filter>Shmeckle\Events</Filter>
     </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\MouseEvent.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
     <ClInclude Include="source\Shmeckle\Logger.h">
       <Filter>Shmeckle</Filter>
     </ClInclude>
-    <ClInclude Include="source\Shmeckle\Events\MouseEvent.h" />
+    <ClInclude Include="source\shmpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp">
@@ -40,5 +43,6 @@
     <ClCompile Include="source\Shmeckle\Logger.cpp">
       <Filter>Shmeckle</Filter>
     </ClCompile>
+    <ClCompile Include="source\shmpch.cpp" />
   </ItemGroup>
 </Project>

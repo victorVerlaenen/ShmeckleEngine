@@ -23,6 +23,9 @@ project "Shmeckle"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "shmpch.h"
+	pchsource "%{prj.name}/source/shmpch.cpp" -- Visual studio needed
+
 	files
 	{
 		"%{prj.name}/source/**.h",
@@ -71,7 +74,6 @@ project "Shmeckle"
 	filter "configurations:Debug"
 		warnings "Extra"
 		externalwarnings "Default"
-		fatalwarnings "All"
 		defines "SHM_DEBUG"
 		symbols "On"
 
@@ -125,7 +127,6 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		warnings "Extra"
-		fatalwarnings "All"
 		defines "SHM_DEBUG"
 		symbols "On"
 

@@ -1,3 +1,5 @@
+#include "shmpch.h"
+
 #include <format>
 
 #include "Logger.h"

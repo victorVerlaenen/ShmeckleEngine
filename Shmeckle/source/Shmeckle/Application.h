@@ -1,6 +1,7 @@
 #pragma once
-#include "Core.h"
 #include <memory>
+
+#include "Core.h"
 
 namespace Shmeckle
 {

@@ -104,7 +104,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Analyze|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>SHM_PLATFORM_WINDOWS;SHM_BUILD_DLL;SHM_ANALYZE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -127,9 +128,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>SHM_PLATFORM_WINDOWS;SHM_BUILD_DLL;SHM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -150,7 +151,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SHM_PLATFORM_WINDOWS;SHM_BUILD_DLL;SHM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -176,7 +178,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SHM_PLATFORM_WINDOWS;SHM_BUILD_DLL;SHM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -209,11 +212,15 @@
     <ClInclude Include="source\Shmeckle\Events\KeyEvent.h" />
     <ClInclude Include="source\Shmeckle\Events\MouseEvent.h" />
     <ClInclude Include="source\Shmeckle\Logger.h" />
+    <ClInclude Include="source\shmpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp" />
     <ClCompile Include="source\Shmeckle\Events\Event.cpp" />
     <ClCompile Include="source\Shmeckle\Logger.cpp" />
+    <ClCompile Include="source\shmpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

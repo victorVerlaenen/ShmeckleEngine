@@ -1,9 +1,11 @@
 #pragma once
-#include "Shmeckle/Core.h"
 #include <string>
 #include <functional>
 #include <queue>
 #include <memory>
+#include <iostream>
+
+#include "Shmeckle/Core.h"
 
 namespace Shmeckle
 {
@@ -68,8 +70,9 @@ namespace Shmeckle
 
 		SHM_API static EventBus& Instance();
 
+		// layerIndex will be used to represent the priority
 		template<typename EventClassType>
-		SHM_API void Subscribe(std::function<bool(EventClassType&)> callback)
+		SHM_API void Subscribe(std::function<bool(EventClassType&)> callback, int layerIndex)
 		{
 			static_assert(std::is_base_of<Event, EventClassType>::value, "\"EventClassType\" must be an Event");
 
@@ -81,7 +84,7 @@ namespace Shmeckle
 				}
 			};
 
-			subscribers_[EventClassType::GetStaticType()].push_back(wrapper);
+			subscribers_[EventClassType::GetStaticType()].push_back({ wrapper, layerIndex });
 		}
 
 		SHM_API inline void Publish(std::unique_ptr<Event> event)
@@ -92,9 +95,15 @@ namespace Shmeckle
 		SHM_API void DispatchEvents();
 
 	private:
+		struct Subscriber
+		{
+			int priority;
+			std::function<bool(Event&)> callback;
+		};
+
 		EventBus() = default;
 
-		std::unordered_map<EventType, std::vector<std::function<bool(Event&)>>> subscribers_{};
+		std::unordered_map<EventType, std::vector<Subscriber>> subscribers_{};
 		std::queue<std::unique_ptr<Event>> eventQueue_{};
 	};
 
@@ -102,4 +111,5 @@ namespace Shmeckle
 	{
 		return os << event.ToString();
 	}
+
 }

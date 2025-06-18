@@ -1,3 +1,5 @@
+#include "shmpch.h"
+
 #include "Event.h"
 #include "Shmeckle/Logger.h"
 
@@ -43,9 +45,9 @@ namespace Shmeckle
 			evaluatedEventType = upCurrentEvent->GetEventType();
 			eventQueue_.pop();
 
-			for (auto callback : subscribers_[evaluatedEventType])
+			for (auto subscriber : subscribers_[evaluatedEventType])
 			{
-				if (callback(*upCurrentEvent))
+				if (subscriber.callback(*upCurrentEvent))
 				{
 					break;
 				}

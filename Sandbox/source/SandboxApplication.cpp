@@ -13,10 +13,6 @@ public:
 
 	}
 
-	SandboxApplication(const SandboxApplication& other) = delete;
-	SandboxApplication(SandboxApplication&& other) = delete;
-	SandboxApplication& operator=(const SandboxApplication& other) = delete;
-	SandboxApplication& operator=(SandboxApplication&& other) = delete;
 };
 
 std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication()

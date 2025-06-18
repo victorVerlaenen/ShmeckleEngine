@@ -2,7 +2,6 @@
 // ------------------------------------------
 // THIS HEADER IS FOR USE BY APPLICATIONS
 // ------------------------------------------
-
 #include "Shmeckle\Application.h"
 #include "Shmeckle\Logger.h"
 
