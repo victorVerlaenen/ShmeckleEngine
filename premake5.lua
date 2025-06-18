@@ -11,8 +11,7 @@ workspace "Shmeckle" -- Is basicly the solution
 		"Dist"
 	}
 
--- Variable
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}" -- Look at the tokens page in the wiki
+	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}" -- Look at the tokens page in the wiki
 
 ---- Shmeckle --------------------------
 project "Shmeckle"
@@ -50,7 +49,6 @@ project "Shmeckle"
 
 		defines
 		{
-			"SHM_PLATFORM_WINDOWS",
 			"SHM_BUILD_DLL"
 		}
 
@@ -114,7 +112,6 @@ project "Sandbox"
 		cppdialect "C++20"
 		staticruntime "On"
 		systemversion "latest"
-		defines	"SHM_PLATFORM_WINDOWS"
 		buildoptions "/utf-8"
 
 	filter "configurations:Analyze"

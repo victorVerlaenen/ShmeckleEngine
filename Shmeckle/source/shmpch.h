@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Windows.h>
+
 #include <iostream>
 #include <functional>
 #include <memory>
@@ -9,7 +11,3 @@
 #include <vector>
 #include <queue>
 #include <unordered_map>
-
-#ifdef SHM_PLATFORM_WINDOWS
-	#include <Windows.h>
-#endif
