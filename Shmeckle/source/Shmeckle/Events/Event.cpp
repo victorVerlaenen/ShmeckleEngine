@@ -18,7 +18,7 @@ namespace Shmeckle
 
 	void EventBus::CleanUp()
 	{
-		// Might need some cleanup
+		supInstance.reset();
 	}
 
 	EventBus& EventBus::Instance()
@@ -26,7 +26,7 @@ namespace Shmeckle
 		if (!supInstance)
 		{
 			SM_ERROR_CORE("The eventbus needs to be initialized first");
-			throw std::runtime_error("The eventbus needs to be initialized first");
+			throw std::runtime_error("The eventbus needs to be initialized first"); // TEMPORARY
 		}
 
 		return *supInstance;

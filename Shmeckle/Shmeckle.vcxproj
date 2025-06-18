@@ -207,6 +207,7 @@
     <ClInclude Include="source\Shmeckle\EntryPoint.h" />
     <ClInclude Include="source\Shmeckle\Events\Event.h" />
     <ClInclude Include="source\Shmeckle\Events\KeyEvent.h" />
+    <ClInclude Include="source\Shmeckle\Events\MouseEvent.h" />
     <ClInclude Include="source\Shmeckle\Logger.h" />
   </ItemGroup>
   <ItemGroup>

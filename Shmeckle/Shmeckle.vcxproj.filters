@@ -28,6 +28,7 @@
     <ClInclude Include="source\Shmeckle\Logger.h">
       <Filter>Shmeckle</Filter>
     </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp">

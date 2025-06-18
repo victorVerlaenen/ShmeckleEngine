@@ -24,12 +24,19 @@ namespace Shmeckle
 		EventCategoryInput = Bit(1),		// 0000 0010
 		EventCategoryKeyboard = Bit(2),		// 0000 0100
 		EventCategoryMouse = Bit(3),		// 0000 1000
-		EventCategoryMouseButton = Bit(4)	// 0001 0000
+		EventCategoryWindow = Bit(4)		// 0001 0000
 	};
 
 	class SHM_API Event
 	{
 	public:
+		~Event() = default;
+
+		Event(const Event& other) = delete;
+		Event(Event&& other) = delete;
+		Event& operator=(const Event& other) = delete;
+		Event& operator=(Event&& other) = delete;
+
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
@@ -41,12 +48,21 @@ namespace Shmeckle
 		}
 
 	protected:
+		Event() = default;
+
 		bool isHandled_{ false };
 	};
 
 	class EventBus
 	{
 	public:
+		~EventBus() = default;
+
+		EventBus(const EventBus& other) = delete;
+		EventBus(EventBus&& other) = delete;
+		EventBus& operator=(const EventBus& other) = delete;
+		EventBus& operator=(EventBus&& other) = delete;
+
 		SHM_API static void Initialize();
 		SHM_API static void CleanUp();
 
@@ -81,4 +97,9 @@ namespace Shmeckle
 		std::unordered_map<EventType, std::vector<std::function<bool(Event&)>>> subscribers_{};
 		std::queue<std::unique_ptr<Event>> eventQueue_{};
 	};
+
+	inline std::ostream& operator<<(std::ostream& os, const Event& event)
+	{
+		return os << event.ToString();
+	}
 }

@@ -14,7 +14,7 @@ namespace Shmeckle
 
 		inline virtual int GetCategoryFlags() const override
 		{
-			return (EventCategoryKeyboard | EventCategoryInput);
+			return (EventCategoryKeyboard | EventCategoryInput | EventCategoryApplication);
 		}
 
 	protected:
@@ -33,17 +33,34 @@ namespace Shmeckle
 
 		inline bool IsHolding() const { return holding_; }
 
-		inline std::string ToString() const override
+		std::string ToString() const override
 		{
-			return std::format("KeyPressedEvent: {}{}", GetName(), holding_ ? "(Held down)" : "");
+			return std::format("KeyPressedEvent: {} {}", keyCode_, holding_ ? "(Held down)" : "");
 		}
 
 		inline static EventType GetStaticType() { return EventType::KeyPressed; }
-		inline virtual EventType GetEventType() const override {return GetStaticType(); }
+		inline virtual EventType GetEventType() const override { return GetStaticType(); }
 		inline const char* GetName() const override { return "KeyPressed"; }
 
 	private:
 		bool holding_;
+	};
+
+	class SHM_API KeyReleasedEvent : public KeyEvent
+	{
+		KeyReleasedEvent(int keyCode)
+			:KeyEvent(keyCode)
+		{
+		}
+
+		std::string ToString() const override
+		{
+			return std::format("KeyReleasedEvent: {}", keyCode_);
+		}
+
+		inline static EventType GetStaticType() { return EventType::KeyReleased; }
+		inline virtual EventType GetEventType() const override { return GetStaticType(); }
+		inline const char* GetName() const override { return "KeyReleased"; }
 	};
 
 }
