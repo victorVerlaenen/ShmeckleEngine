@@ -19,9 +19,11 @@ namespace Shmeckle
 		WindowEvent() = default;
 	};
 	
-	class SHM_API WindowCloseEvent : public Event
+	class SHM_API WindowCloseEvent : public WindowEvent
 	{
 	public:
+		WindowCloseEvent() {};
+
 		std::string ToString() const override
 		{
 			return GetName();
@@ -32,7 +34,7 @@ namespace Shmeckle
 		inline const char* GetName() const override { return "WindowClose"; }
 	};
 
-	class SHM_API WindowResizeEvent : public Event
+	class SHM_API WindowResizeEvent : public WindowEvent
 	{
 	public:
 		WindowResizeEvent(unsigned int width, unsigned int height)

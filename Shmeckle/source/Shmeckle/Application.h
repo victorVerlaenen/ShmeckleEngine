@@ -7,6 +7,7 @@ namespace Shmeckle
 {
 	class Event;
 	class WindowCloseEvent;
+	class WindowResizeEvent;
 	class Window;
 
 	class Application
@@ -24,6 +25,7 @@ namespace Shmeckle
 
 	protected:
 		bool OnWindowCloseEvent(WindowCloseEvent& event);
+		bool OnWindowResizeEvent(WindowResizeEvent& event);
 
 		std::unique_ptr<Window> window_;
 		bool running_{ true };

@@ -11,14 +11,17 @@ namespace Shmeckle
 
 	Application::Application()
 	{
+		Logger::Initialize();
 		EventBus::Initialize(); // This should probably happen somewhere else
-		window_ = std::make_unique<Window>();
+		window_ = std::make_unique<Window>("Shmeckle");
 
 		EventBus::Instance().Subscribe<WindowCloseEvent>([this](WindowCloseEvent& event) { return OnWindowCloseEvent(event); }, 0);
+		EventBus::Instance().Subscribe<WindowResizeEvent>([this](WindowResizeEvent& event) { return OnWindowResizeEvent(event); }, 0);
 	}
 
 	Application::~Application()
 	{
+		EventBus::CleanUp();
 	}
 
 	void Application::Run()
@@ -34,7 +37,15 @@ namespace Shmeckle
 	{
 		Logger::TraceCore("{}", event.ToString());
 		running_ = false;
+
 		return true;
+	}
+
+	bool Application::OnWindowResizeEvent(WindowResizeEvent& event)
+	{
+		Logger::TraceCore("{}", event.ToString());
+
+		return false;
 	}
 
 }
