@@ -4,6 +4,7 @@
 #include <queue>
 #include <memory>
 #include <iostream>
+#include <format>
 
 #include "Shmeckle/Core.h"
 
@@ -49,6 +50,8 @@ namespace Shmeckle
 			return GetCategoryFlags() & category;
 		}
 
+		static const unsigned int NUMBER_OF_TYPES_{ 11 }; // You should increment this for each new element type added
+
 	protected:
 		Event() = default;
 
@@ -84,15 +87,17 @@ namespace Shmeckle
 				}
 			};
 
-			subscribers_[EventClassType::GetStaticType()].push_back({ wrapper, layerIndex });
+			subscribers_[EventClassType::GetStaticType()].push_back({ layerIndex, wrapper });
 		}
 
-		SHM_API inline void Publish(std::unique_ptr<Event> event)
+		SHM_API inline void QueueEvent(std::unique_ptr<Event> event)
 		{
 			eventQueue_.push(std::move(event));
 		}
 
-		SHM_API void DispatchEvents();
+		SHM_API void DispatchAll();
+		SHM_API void Dispatch(std::unique_ptr<Event> event);
+
 
 	private:
 		struct Subscriber
@@ -103,13 +108,17 @@ namespace Shmeckle
 
 		EventBus() = default;
 
-		std::unordered_map<EventType, std::vector<Subscriber>> subscribers_{};
-		std::queue<std::unique_ptr<Event>> eventQueue_{};
+		std::unordered_map<EventType, std::vector<Subscriber>> subscribers_;
+		std::queue<std::unique_ptr<Event>> eventQueue_;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& event)
-	{
-		return os << event.ToString();
-	}
-
 }
+
+// Specialize std::formatter
+template <>
+struct std::formatter<Shmeckle::Event> : std::formatter<std::string> {
+	auto format(const Shmeckle::Event& p, format_context& ctx) {
+		return formatter<std::string>::format(
+			std::format("{}", p.ToString()), ctx);
+	}
+};

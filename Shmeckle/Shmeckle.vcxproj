@@ -211,8 +211,10 @@
     <ClInclude Include="source\Shmeckle\Events\Event.h" />
     <ClInclude Include="source\Shmeckle\Events\KeyEvent.h" />
     <ClInclude Include="source\Shmeckle\Events\MouseEvent.h" />
+    <ClInclude Include="source\Shmeckle\Events\WindowEvent.h" />
     <ClInclude Include="source\Shmeckle\Logger.h" />
     <ClInclude Include="source\shmpch.h" />
+    <ClInclude Include="source\Shmeckle\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp" />
@@ -221,6 +223,7 @@
     <ClCompile Include="source\shmpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="source\Shmeckle\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -5,19 +5,28 @@
 
 namespace Shmeckle
 {
+	class Event;
+	class WindowCloseEvent;
+	class Window;
 
-	class SHM_API Application
+	class Application
 	{
 	public:
-		Application();
-		virtual ~Application();
+		SHM_API Application();
+		SHM_API virtual ~Application();
 
 		Application(const Application& other) = delete;
 		Application(Application&& other) = delete;
 		Application& operator=(const Application& other) = delete;
 		Application& operator=(Application&& other) = delete;
 
-		void Run();
+		SHM_API void Run();
+
+	protected:
+		bool OnWindowCloseEvent(WindowCloseEvent& event);
+
+		std::unique_ptr<Window> window_;
+		bool running_{ true };
 	};
 
 	// Needs to be defined in client

@@ -11,7 +11,7 @@ namespace Shmeckle
 	{
 		if (supInstance)
 		{
-			SM_WARNING_CORE("The eventbus is already initialized. Canceling initialization...");
+			Logger::WarningCore("The eventbus is already initialized. Canceling initialization...");
 			return;
 		}
 
@@ -27,14 +27,14 @@ namespace Shmeckle
 	{
 		if (!supInstance)
 		{
-			SM_ERROR_CORE("The eventbus needs to be initialized first");
+			Logger::ErrorCore("The eventbus needs to be initialized first");
 			throw std::runtime_error("The eventbus needs to be initialized first"); // TEMPORARY
 		}
 
 		return *supInstance;
 	}
 
-	void EventBus::DispatchEvents()
+	void EventBus::DispatchAll()
 	{
 		std::unique_ptr<Event> upCurrentEvent{ nullptr };
 		EventType evaluatedEventType{ EventType::None };
@@ -51,6 +51,19 @@ namespace Shmeckle
 				{
 					break;
 				}
+			}
+		}
+	}
+
+	void EventBus::Dispatch(std::unique_ptr<Event> event)
+	{
+		EventType evaluatedEventType{ event->GetEventType() };
+
+		for (auto subscriber : subscribers_[evaluatedEventType])
+		{
+			if (subscriber.callback(*event))
+			{
+				break;
 			}
 		}
 	}

@@ -32,6 +32,8 @@
       <Filter>Shmeckle</Filter>
     </ClInclude>
     <ClInclude Include="source\shmpch.h" />
+    <ClInclude Include="source\Shmeckle\Window.h" />
+    <ClInclude Include="source\Shmeckle\Events\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp">
@@ -44,5 +46,6 @@
       <Filter>Shmeckle</Filter>
     </ClCompile>
     <ClCompile Include="source\shmpch.cpp" />
+    <ClCompile Include="source\Shmeckle\Window.cpp" />
   </ItemGroup>
 </Project>

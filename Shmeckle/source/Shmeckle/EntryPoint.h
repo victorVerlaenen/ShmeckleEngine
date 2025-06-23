@@ -6,6 +6,7 @@ extern std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication();
 
 int main(int /*argc*/, char** /*argv*/)
 {
+
 	auto upApp = Shmeckle::CreateApplication();
 	if (upApp)
 	{
