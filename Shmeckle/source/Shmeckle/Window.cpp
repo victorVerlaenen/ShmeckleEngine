@@ -3,6 +3,8 @@
 #include "Logger.h"
 #include "Events\Event.h"
 #include "Events\WindowEvent.h"
+#include "Events\MouseEvent.h"
+#include "Events\KeyEvent.h"
 
 namespace Shmeckle
 {
@@ -13,7 +15,7 @@ namespace Shmeckle
 		, width_{ width }
 		, height_{ height }
 	{
-		Logger::WarningCore("Creating window {} ({}, {})", "title", width_, height_);
+		Logger::WarningCore("Creating window {} ({}, {})", title, width_, height_);
 
 		RegisterWindowClassEx(CLASS_NAME_);
 		MakeWindow();
@@ -67,13 +69,50 @@ namespace Shmeckle
 		{
 		case WM_CLOSE:
 			DestroyWindow(hWindow_);	// Destroy the window when the user clicks the close button
-			EventBus::Instance().Dispatch(std::make_unique<WindowCloseEvent>());
+			EventBus::Instance().QueueEvent(std::make_unique<WindowCloseEvent>());
 			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);			// Notify Windows that the application can quit
 			return 0;
 		case WM_SIZE:
-			EventBus::Instance().Dispatch(std::make_unique<WindowResizeEvent>(LOWORD(lParameter), HIWORD(lParameter)));
+			EventBus::Instance().QueueEvent(std::make_unique<WindowResizeEvent>(LOWORD(lParameter), HIWORD(lParameter)));
+			break;
+		case WM_LBUTTONDOWN:
+			EventBus::Instance().Dispatch(std::make_unique<MouseButtonPressedEvent>(0));
+			break;
+		case WM_LBUTTONUP:
+			EventBus::Instance().Dispatch(std::make_unique<MouseButtonReleasedEvent>(0));
+			break;
+		case WM_RBUTTONDOWN:
+			EventBus::Instance().Dispatch(std::make_unique<MouseButtonPressedEvent>(1));
+			break;
+		case WM_RBUTTONUP:
+			EventBus::Instance().Dispatch(std::make_unique<MouseButtonReleasedEvent>(1));
+			break;
+		case WM_MBUTTONDOWN:
+			EventBus::Instance().Dispatch(std::make_unique<MouseButtonPressedEvent>(2));
+			break;
+		case WM_MBUTTONUP:
+			EventBus::Instance().Dispatch(std::make_unique<MouseButtonReleasedEvent>(2));
+			break;
+		case WM_KEYDOWN:
+		{
+			WORD vkCode = LOWORD(wParameter);
+
+			WORD keyFlags = HIWORD(lParameter);
+			BOOL wasKeyDown = (keyFlags & KF_REPEAT) == KF_REPEAT;
+
+			EventBus::Instance().Dispatch(std::make_unique<KeyPressedEvent>(vkCode, wasKeyDown));
+		}
+		break;
+		case WM_KEYUP:
+		{
+			WORD vkCode = LOWORD(wParameter);
+			EventBus::Instance().Dispatch(std::make_unique<KeyReleasedEvent>(vkCode));
+		}
+		break;
+		case WM_MOUSEMOVE:
+			EventBus::Instance().Dispatch(std::make_unique<MouseMovedEvent>(LOWORD(lParameter), HIWORD(lParameter)));
 			break;
 		}
 

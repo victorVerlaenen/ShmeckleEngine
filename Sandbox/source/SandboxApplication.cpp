@@ -5,7 +5,7 @@ class SandboxApplication : public Shmeckle::Application
 public:
 	SandboxApplication() noexcept
 	{
-		
+		Shmeckle::Logger::Info("Sandbox is being created...");
 	}
 
 	~SandboxApplication()

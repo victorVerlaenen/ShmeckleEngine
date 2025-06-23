@@ -48,6 +48,7 @@ namespace Shmeckle
 
 	class SHM_API KeyReleasedEvent : public KeyEvent
 	{
+	public:
 		KeyReleasedEvent(int keyCode)
 			:KeyEvent(keyCode)
 		{

@@ -8,6 +8,11 @@ namespace Shmeckle
 	class Event;
 	class WindowCloseEvent;
 	class WindowResizeEvent;
+	class MouseButtonPressedEvent;
+	class MouseButtonReleasedEvent;
+	class MouseMovedEvent;
+	class KeyPressedEvent;
+	class KeyReleasedEvent;
 	class Window;
 
 	class Application
@@ -24,8 +29,15 @@ namespace Shmeckle
 		SHM_API void Run();
 
 	protected:
+		bool OnEvent(Event& event);
+
 		bool OnWindowCloseEvent(WindowCloseEvent& event);
 		bool OnWindowResizeEvent(WindowResizeEvent& event);
+		bool OnMouseButtonPressedEvent(MouseButtonPressedEvent& event);
+		bool OnMouseButtonReleasedEvent(MouseButtonReleasedEvent& event);
+		bool OnMouseMovedEvent(MouseMovedEvent& event);
+		bool OnKeyPressedEvent(KeyPressedEvent& event);
+		bool OnKeyReleasedEvent(KeyReleasedEvent& event);
 
 		std::unique_ptr<Window> window_;
 		bool running_{ true };

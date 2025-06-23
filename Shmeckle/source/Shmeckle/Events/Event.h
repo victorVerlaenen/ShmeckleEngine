@@ -114,11 +114,3 @@ namespace Shmeckle
 
 }
 
-// Specialize std::formatter
-template <>
-struct std::formatter<Shmeckle::Event> : std::formatter<std::string> {
-	auto format(const Shmeckle::Event& p, format_context& ctx) {
-		return formatter<std::string>::format(
-			std::format("{}", p.ToString()), ctx);
-	}
-};
