@@ -24,7 +24,7 @@ namespace Shmeckle
 		EventBus::Instance().Subscribe<MouseButtonReleasedEvent>([this](MouseButtonReleasedEvent& event) { return OnEvent(event); }, 0);
 		EventBus::Instance().Subscribe<KeyPressedEvent>([this](KeyPressedEvent& event) { return OnEvent(event); }, 0);
 		EventBus::Instance().Subscribe<KeyReleasedEvent>([this](KeyReleasedEvent& event) { return OnEvent(event); }, 0);
-		EventBus::Instance().Subscribe<MouseMovedEvent>([this](MouseMovedEvent& event) { return OnEvent(event); }, 0);
+		//EventBus::Instance().Subscribe<MouseMovedEvent>([this](MouseMovedEvent& event) { return OnEvent(event); }, 0);
 	}
 
 	Application::~Application()

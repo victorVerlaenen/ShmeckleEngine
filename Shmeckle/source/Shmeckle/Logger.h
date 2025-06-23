@@ -48,31 +48,31 @@ namespace Shmeckle
 		}
 
 		template<typename... Args>
-		SHM_API inline static void TraceCore(std::format_string<Args...> fmtString, Args&&... args)
+		inline static void TraceCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Trace(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
-		SHM_API inline static void InfoCore(std::format_string<Args...> fmtString, Args&&... args)
+		inline static void InfoCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Info(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
-		SHM_API inline static void WarningCore(std::format_string<Args...> fmtString, Args&&... args)
+		inline static void WarningCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Warning(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
-		SHM_API inline static void ErrorCore(std::format_string<Args...> fmtString, Args&&... args)
+		inline static void ErrorCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Error(std::format(fmtString, std::forward<Args>(args)...));
 		}
 
 		template<typename... Args>
-		SHM_API inline static void CriticalCore(std::format_string<Args...> fmtString, Args&&... args)
+		inline static void CriticalCore(std::format_string<Args...> fmtString, Args&&... args)
 		{
 			Critical(std::format(fmtString, std::forward<Args>(args)...));
 		}
@@ -83,11 +83,11 @@ namespace Shmeckle
 		SHM_API static void Error(const std::string& formatedString);
 		SHM_API static void Critical(const std::string& formatedString);
 
-		SHM_API static void TraceCore(const std::string& formatedString);
-		SHM_API static void InfoCore(const std::string& formatedString);
-		SHM_API static void WarningCore(const std::string& formatedString);
-		SHM_API static void ErrorCore(const std::string& formatedString);
-		SHM_API static void CriticalCore(const std::string& formatedString);
+		static void TraceCore(const std::string& formatedString);
+		static void InfoCore(const std::string& formatedString);
+		static void WarningCore(const std::string& formatedString);
+		static void ErrorCore(const std::string& formatedString);
+		static void CriticalCore(const std::string& formatedString);
 	};
 
 }
