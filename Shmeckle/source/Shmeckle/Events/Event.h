@@ -88,14 +88,19 @@ namespace Shmeckle
 			};
 
 			subscribers_[EventClassType::GetStaticType()].push_back({ layerIndex, wrapper });
+
+			SortType(EventClassType::GetStaticType());
 		}
 
+		// Queues the event to be dispatched later
 		SHM_API inline void QueueEvent(std::unique_ptr<Event> event)
 		{
 			eventQueue_.push(std::move(event));
 		}
 
 		SHM_API void DispatchAll();
+
+		// Imediately dispatches the given event
 		SHM_API void Dispatch(std::unique_ptr<Event> event);
 
 
@@ -107,6 +112,7 @@ namespace Shmeckle
 		};
 
 		EventBus() = default;
+		void SortType(EventType type);
 
 		std::unordered_map<EventType, std::vector<Subscriber>> subscribers_;
 		std::queue<std::unique_ptr<Event>> eventQueue_;

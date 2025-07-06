@@ -68,20 +68,28 @@ project "Shmeckle"
 		vsprops { CodeAnalysisRuleSet = "../codeAnalysis/Shmeckle.ruleset" }
 		defines "SHM_ANALYZE"
 		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
 
 	filter "configurations:Debug"
 		warnings "Extra"
 		externalwarnings "Default"
 		defines "SHM_DEBUG"
 		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
 
 	filter "configurations:Release"
 		defines "SHM_RELEASE"
 		optimize "On"
+		staticruntime "Off"
+		runtime "Release"
 
 	filter "configurations:Dist"
 		defines "SHM_DIST"
 		optimize "On"
+		staticruntime "Off"
+		runtime "Release"
 
 ---- Sandbox ------------------------------
 project "Sandbox"
@@ -121,16 +129,24 @@ project "Sandbox"
 		vsprops { CodeAnalysisRuleSet = "../codeAnalysis/Shmeckle.ruleset" }
 		defines "SHM_ANALYZE"
 		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
 
 	filter "configurations:Debug"
 		warnings "Extra"
 		defines "SHM_DEBUG"
 		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
 
 	filter "configurations:Release"
 		defines "SHM_RELEASE"
 		optimize "On"
+		staticruntime "Off"
+		runtime "Release"
 
 	filter "configurations:Dist"
 		defines "SHM_DIST"
 		optimize "On"
+		staticruntime "Off"
+		runtime "Release"

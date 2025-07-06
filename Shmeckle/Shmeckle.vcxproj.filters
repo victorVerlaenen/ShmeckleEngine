@@ -28,12 +28,22 @@
     <ClInclude Include="source\Shmeckle\Events\MouseEvent.h">
       <Filter>Shmeckle\Events</Filter>
     </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\WindowEvent.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Layer.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\LayerStack.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
     <ClInclude Include="source\Shmeckle\Logger.h">
       <Filter>Shmeckle</Filter>
     </ClInclude>
+    <ClInclude Include="source\Shmeckle\Window.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
     <ClInclude Include="source\shmpch.h" />
-    <ClInclude Include="source\Shmeckle\Window.h" />
-    <ClInclude Include="source\Shmeckle\Events\WindowEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp">
@@ -42,10 +52,18 @@
     <ClCompile Include="source\Shmeckle\Events\Event.cpp">
       <Filter>Shmeckle\Events</Filter>
     </ClCompile>
+    <ClCompile Include="source\Shmeckle\Layer.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\LayerStack.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
     <ClCompile Include="source\Shmeckle\Logger.cpp">
       <Filter>Shmeckle</Filter>
     </ClCompile>
+    <ClCompile Include="source\Shmeckle\Window.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
     <ClCompile Include="source\shmpch.cpp" />
-    <ClCompile Include="source\Shmeckle\Window.cpp" />
   </ItemGroup>
 </Project>

@@ -112,7 +112,7 @@
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 /analyze:external- %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -135,7 +135,7 @@
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -161,7 +161,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -188,7 +188,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
@@ -212,18 +212,22 @@
     <ClInclude Include="source\Shmeckle\Events\KeyEvent.h" />
     <ClInclude Include="source\Shmeckle\Events\MouseEvent.h" />
     <ClInclude Include="source\Shmeckle\Events\WindowEvent.h" />
+    <ClInclude Include="source\Shmeckle\Layer.h" />
+    <ClInclude Include="source\Shmeckle\LayerStack.h" />
     <ClInclude Include="source\Shmeckle\Logger.h" />
-    <ClInclude Include="source\shmpch.h" />
     <ClInclude Include="source\Shmeckle\Window.h" />
+    <ClInclude Include="source\shmpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Shmeckle\Application.cpp" />
     <ClCompile Include="source\Shmeckle\Events\Event.cpp" />
+    <ClCompile Include="source\Shmeckle\Layer.cpp" />
+    <ClCompile Include="source\Shmeckle\LayerStack.cpp" />
     <ClCompile Include="source\Shmeckle\Logger.cpp" />
+    <ClCompile Include="source\Shmeckle\Window.cpp" />
     <ClCompile Include="source\shmpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="source\Shmeckle\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

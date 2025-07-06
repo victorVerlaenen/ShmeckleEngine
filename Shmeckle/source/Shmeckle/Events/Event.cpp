@@ -68,4 +68,11 @@ namespace Shmeckle
 		}
 	}
 
+	void EventBus::SortType(EventType type)
+	{
+		std::sort(subscribers_[type].begin(), subscribers_[type].end(), [](const Subscriber& a, const Subscriber& b) {
+			return a.priority < b.priority;
+		});
+	}
+
 }
