@@ -1,4 +1,4 @@
--- premake5.lua
+-- root
 
 workspace "Shmeckle" -- Is basicly the solution
 	architecture "x64"
@@ -12,6 +12,7 @@ workspace "Shmeckle" -- Is basicly the solution
 	}
 
 	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}" -- Look at the tokens page in the wiki
+
 
 ---- Shmeckle --------------------------
 project "Shmeckle"
@@ -37,11 +38,6 @@ project "Shmeckle"
 		"%{prj.name}/source"
 	}
 
-	externalincludedirs
-	{
-		"%{prj.name}/dependencies/spdlog/include"
-	}
-
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "On" -- This has to do with linking the runtime libs (We want to link them staticly)
@@ -49,7 +45,8 @@ project "Shmeckle"
 
 		defines
 		{
-			"SHM_BUILD_DLL"
+			"SHM_BUILD_DLL",
+			"SHM_USE_GLFW"
 		}
 
 		postbuildcommands

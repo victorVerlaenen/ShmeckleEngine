@@ -5,9 +5,16 @@
 
 namespace Shmeckle
 {
-
-	void CoreSystemsLayer::OnEnabled(unsigned int layerIndex)
+	CoreSystemsLayer::CoreSystemsLayer(const std::string& layerName)
+		:Layer(layerName)
 	{
+	}
+
+	void CoreSystemsLayer::OnEnabled(size_t layerIndex)
+	{
+		// Unused param
+		(void)layerIndex;
+
 		Logger::Initialize();
 		EventBus::Initialize();
 	}

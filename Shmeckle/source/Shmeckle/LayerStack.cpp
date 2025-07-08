@@ -3,7 +3,7 @@
 
 void Shmeckle::LayerStack::PushLayer(std::unique_ptr<Layer> layer)
 {
-	unsigned int index = std::distance(layers_.begin(), layerInsertPoint_);
+	size_t index = std::distance(layers_.begin(), layerInsertPoint_);
 	layer->OnEnabled(index);
 	layerInsertPoint_ = layers_.emplace(layerInsertPoint_, std::move(layer));
 }
@@ -21,7 +21,7 @@ void Shmeckle::LayerStack::RemoveLayer(std::unique_ptr<Layer> layer)
 
 void Shmeckle::LayerStack::PushOverlayLayer(std::unique_ptr<Layer> layer)
 {
-	unsigned int index = layers_.size();
+	size_t index = layers_.size();
 	layer->OnEnabled(index);
 	layers_.emplace_back(std::move(layer));
 }

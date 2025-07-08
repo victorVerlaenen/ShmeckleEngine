@@ -1,15 +1,24 @@
 #include "shmpch.h"
-#include "Window.h"
-#include "Logger.h"
-#include "Events\Event.h"
-#include "Events\WindowEvent.h"
-#include "Events\MouseEvent.h"
-#include "Events\KeyEvent.h"
+#include "Win32Window.h"
+#include "Shmeckle\Logger.h"
+#include "Shmeckle\Events\Event.h"
+#include "Shmeckle\Events\WindowEvent.h"
+#include "Shmeckle\Events\MouseEvent.h"
+#include "Shmeckle\Events\KeyEvent.h"
 
 namespace Shmeckle
 {
 
-	Window::Window(const std::string& title, unsigned int width, unsigned int height)
+	#ifdef SHM_USE_WIN32
+
+	std::unique_ptr<Window> Window::Create(const std::string& title, unsigned int width, unsigned int height)
+	{
+		return std::make_unique<Win32Window>(title, width, height);
+	}	
+
+	#endif // SHM_USE_WIN32
+
+	Win32Window::Win32Window(const std::string& title, unsigned int width, unsigned int height)
 		:hInstance_{ GetModuleHandle(nullptr) }	// Retrieve the instance handle of the current process
 		, title_{ std::wstring{title.begin(), title.end()} }
 		, width_{ width }
@@ -23,12 +32,12 @@ namespace Shmeckle
 		ShowWindow(hWindow_, SW_SHOW);
 	}
 
-	Window::~Window()
+	Win32Window::~Win32Window()
 	{
 		UnregisterClass(CLASS_NAME_, hInstance_);
 	}
 
-	void Window::ProcessMessages()
+	void Win32Window::Update()
 	{
 		MSG message{};
 
@@ -40,19 +49,19 @@ namespace Shmeckle
 		}
 	}
 
-	LRESULT Window::WindowProc(HWND hWindow, UINT uMessage, WPARAM wParameter, LPARAM lParameter)
+	LRESULT Win32Window::WindowProc(HWND hWindow, UINT uMessage, WPARAM wParameter, LPARAM lParameter)
 	{
 		if (uMessage == WM_NCCREATE)
 		{
 			// During creation: store the pointer to the Window instance in user data
 			CREATESTRUCT* pCreate = reinterpret_cast<CREATESTRUCT*>(lParameter);
-			Window* pWindow = static_cast<Window*>(pCreate->lpCreateParams);
+			Win32Window* pWindow = static_cast<Win32Window*>(pCreate->lpCreateParams);
 			pWindow->hWindow_ = hWindow; // Store HWND in the Window class instance
 			SetWindowLongPtr(hWindow, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(pWindow));
 		}
 
 		// Retrieve the Window instance from the window's user data
-		Window* pWindow = reinterpret_cast<Window*>(GetWindowLongPtr(hWindow, GWLP_USERDATA));
+		Win32Window* pWindow = reinterpret_cast<Win32Window*>(GetWindowLongPtr(hWindow, GWLP_USERDATA));
 
 		if (pWindow)
 		{
@@ -63,7 +72,7 @@ namespace Shmeckle
 		return DefWindowProc(hWindow, uMessage, wParameter, lParameter);
 	}
 
-	LRESULT Window::HandleMessage(UINT uMessage, WPARAM wParameter, LPARAM lParameter)
+	LRESULT Win32Window::HandleMessage(UINT uMessage, WPARAM wParameter, LPARAM lParameter)
 	{
 		switch (uMessage)
 		{
@@ -119,7 +128,15 @@ namespace Shmeckle
 		return DefWindowProc(hWindow_, uMessage, wParameter, lParameter);
 	}
 
-	void Window::RegisterWindowClassEx(LPCWSTR ClassName) const
+	void Win32Window::SetVSync(bool enabled)
+	{
+		// Unused param
+		(void)enabled;
+
+		Logger::WarningCore("VSync in not supported for a win32 window for now...");
+	}
+
+	void Win32Window::RegisterWindowClassEx(LPCWSTR ClassName) const
 	{
 		WNDCLASSEX windowClass = {};
 		windowClass.cbSize = sizeof(WNDCLASSEX);
@@ -145,7 +162,7 @@ namespace Shmeckle
 		}
 	}
 
-	void Window::MakeWindow()
+	void Win32Window::MakeWindow()
 	{
 		hWindow_ = CreateWindow(
 			CLASS_NAME_,								// Class name (must match exactly with the registered name)

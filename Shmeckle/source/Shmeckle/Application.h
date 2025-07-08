@@ -3,11 +3,11 @@
 
 #include "Core.h"
 #include "LayerStack.h"
+#include "Window.h"
 
 namespace Shmeckle
 {
 	class WindowCloseEvent;
-	class Window;
 
 	class Application
 	{

@@ -75,7 +75,6 @@
     <IntDir>$(ProjectDir)..\bin-int\Analyze-windows-x86_64\Shmeckle\</IntDir>
     <TargetName>Shmeckle</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>dependencies\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -84,7 +83,6 @@
     <IntDir>$(ProjectDir)..\bin-int\Debug-windows-x86_64\Shmeckle\</IntDir>
     <TargetName>Shmeckle</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>dependencies\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -92,7 +90,6 @@
     <IntDir>$(ProjectDir)..\bin-int\Release-windows-x86_64\Shmeckle\</IntDir>
     <TargetName>Shmeckle</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>dependencies\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -100,7 +97,6 @@
     <IntDir>$(ProjectDir)..\bin-int\Dist-windows-x86_64\Shmeckle\</IntDir>
     <TargetName>Shmeckle</TargetName>
     <TargetExt>.dll</TargetExt>
-    <ExternalIncludePath>dependencies\spdlog\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Analyze|x64'">
     <ClCompile>
@@ -108,7 +104,7 @@
       <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_ANALYZE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_USE_GLFW;SHM_ANALYZE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -131,7 +127,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level4</WarningLevel>
-      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_USE_GLFW;SHM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -154,7 +150,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_USE_GLFW;SHM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -181,7 +177,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>shmpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SHM_BUILD_DLL;SHM_USE_GLFW;SHM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>dependencies\spdlog\include;source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -204,9 +200,12 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="source\Platform\Windows\Win32Window.h" />
+    <ClInclude Include="source\Platform\Windows\WindowsWindowGLFW.h" />
     <ClInclude Include="source\Shmeckle.h" />
     <ClInclude Include="source\Shmeckle\Application.h" />
     <ClInclude Include="source\Shmeckle\Core.h" />
+    <ClInclude Include="source\Shmeckle\CoreSystemsLayer.h" />
     <ClInclude Include="source\Shmeckle\EntryPoint.h" />
     <ClInclude Include="source\Shmeckle\Events\Event.h" />
     <ClInclude Include="source\Shmeckle\Events\KeyEvent.h" />
@@ -219,12 +218,14 @@
     <ClInclude Include="source\shmpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Platform\Windows\Win32Window.cpp" />
+    <ClCompile Include="source\Platform\Windows\WindowsWindowGLFW.cpp" />
     <ClCompile Include="source\Shmeckle\Application.cpp" />
+    <ClCompile Include="source\Shmeckle\CoreSystemsLayer.cpp" />
     <ClCompile Include="source\Shmeckle\Events\Event.cpp" />
     <ClCompile Include="source\Shmeckle\Layer.cpp" />
     <ClCompile Include="source\Shmeckle\LayerStack.cpp" />
     <ClCompile Include="source\Shmeckle\Logger.cpp" />
-    <ClCompile Include="source\Shmeckle\Window.cpp" />
     <ClCompile Include="source\shmpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

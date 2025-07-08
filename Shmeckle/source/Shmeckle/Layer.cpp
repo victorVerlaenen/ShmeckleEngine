@@ -13,7 +13,7 @@ namespace Shmeckle
 	{
 	}
 
-	void Layer::OnEnabled(unsigned int layerIndex)
+	void Layer::OnEnabled(size_t layerIndex)
 	{
 		// Unused param
 		(void)layerIndex;

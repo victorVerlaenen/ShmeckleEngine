@@ -17,7 +17,7 @@ namespace Shmeckle
 		Layer(Layer&& other) = default;
 		Layer& operator=(Layer&& other) = default;
 
-		SHM_API virtual void OnEnabled(unsigned int layerIndex);
+		SHM_API virtual void OnEnabled(size_t layerIndex);
 		SHM_API virtual void OnDisabled();
 		SHM_API virtual void Update();
 
