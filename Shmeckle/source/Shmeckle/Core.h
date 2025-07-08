@@ -1,15 +1,12 @@
 #pragma once
 
-#ifdef SHMECKLE_PLATFORM_WINDOWS
-	#ifdef SHMECKLE_BUILD_DLL
-		#define SHMECKLE_API __declspec(dllexport)
-	#else 
-		#define SHMECKLE_API __declspec(dllimport)
-	#endif // SHMECKLE_BUILD_DLL
+#ifdef SHM_BUILD_DLL
+	#define SHM_API __declspec(dllexport)
 #else
-	#error Shmeckle only supports windows
-#endif // SHMECKLE_PLATFORM_WINDOWS
+	#define SHM_API __declspec(dllimport)
+#endif
 
-constexpr int Bit(int x) {
+constexpr int Bit(int x)
+{
 	return 1 << x;
 }

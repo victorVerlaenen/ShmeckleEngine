@@ -1,65 +1,78 @@
-#include "smpch.h"
-#include "Event.h"
+#include "shmpch.h"
 
-namespace shmeckle
+#include "Event.h"
+#include "Shmeckle/Logger.h"
+
+namespace Shmeckle
 {
-	static EventBus* s_pInstance{ nullptr };
+	static std::unique_ptr<EventBus> supInstance{ nullptr };
 
 	void EventBus::Initialize()
 	{
-		if (s_pInstance)
+		if (supInstance)
 		{
-			Logger::CoreWarning("The EventBus is already initialized. Exiting Initialize()...");
+			Logger::WarningCore("The eventbus is already initialized. Canceling initialization...");
 			return;
 		}
 
-		s_pInstance = new EventBus();
+		supInstance = std::unique_ptr<EventBus>(new EventBus());
 	}
 
 	void EventBus::CleanUp()
 	{
-		delete s_pInstance;
-		s_pInstance = nullptr;
+		supInstance.reset();
 	}
 
 	EventBus& EventBus::Instance()
 	{
-		if (!s_pInstance)
+		if (!supInstance)
 		{
-			Logger::CoreWarning("The EventBus needs to be initialized first. Can't dereference a nullptr...");
-			throw std::runtime_error("The EventBus needs to be initialized first. Can't dereference a nullptr...");
+			Logger::ErrorCore("The eventbus needs to be initialized first");
+			throw std::runtime_error("The eventbus needs to be initialized first"); // TEMPORARY
 		}
 
-		return *s_pInstance;
+		return *supInstance;
 	}
 
-	void EventBus::UnregisterListener(Event::Type type, int id)
+	void EventBus::DispatchAll()
 	{
-		auto& listeners = m_Listeners[type];
-		listeners.erase(
-			std::remove_if(
-				listeners.begin()
-				, listeners.end()
-				, [id](const EventCallbackWrapper& wrapper) { return wrapper.id == id; })
-			, listeners.end());
-	}
+		std::unique_ptr<Event> upCurrentEvent{ nullptr };
+		EventType evaluatedEventType{ EventType::None };
 
-	void EventBus::DispatchEvents()
-	{
-		while (!m_EventQueue.empty()) {
-			auto event = std::move(m_EventQueue.front());
-			m_EventQueue.pop();
+		while (!eventQueue_.empty())
+		{
+			upCurrentEvent = std::move(eventQueue_.front());
+			evaluatedEventType = upCurrentEvent->GetEventType();
+			eventQueue_.pop();
 
-			auto& listeners = m_Listeners[event->GetEventType()];
-			for (auto& wrapper : listeners) {
-				wrapper.callback(*event);
+			for (auto subscriber : subscribers_[evaluatedEventType])
+			{
+				if (subscriber.callback(*upCurrentEvent))
+				{
+					break;
+				}
 			}
 		}
 	}
 
-	int EventBus::GenerateUniqueID()
+	void EventBus::Dispatch(std::unique_ptr<Event> event)
 	{
-		static int idCounter = 0;
-		return ++idCounter;
+		EventType evaluatedEventType{ event->GetEventType() };
+
+		for (auto subscriber : subscribers_[evaluatedEventType])
+		{
+			if (subscriber.callback(*event))
+			{
+				break;
+			}
+		}
 	}
+
+	void EventBus::SortType(EventType type)
+	{
+		std::sort(subscribers_[type].begin(), subscribers_[type].end(), [](const Subscriber& a, const Subscriber& b) {
+			return a.priority < b.priority;
+		});
+	}
+
 }

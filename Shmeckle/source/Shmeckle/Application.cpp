@@ -1,73 +1,56 @@
-#include "smpch.h"
-#include "Application.h"
+#include "shmpch.h"
 
+#include "Application.h"
 #include "Window.h"
+#include "Logger.h"
 
 #include "Events\Event.h"
-#include "Events\ApplicationEvents.h"
-#include "Events\MouseEvents.h"
-#include "Events\KeyEvents.h"
+#include "Events\WindowEvent.h"
 
-#include "GLFW\glfw3.h"
+#include "CoreSystemsLayer.h"
 
-#define DISABLE_VLD
-#if !defined(DISABLE_VLD)
-	#ifdef VLD_AVAILABLE
-		#include <vld.h>
-	#endif // VLD_AVAILABLE
-#endif // DISABLE_VLD
-
-namespace shmeckle
+namespace Shmeckle
 {
+
 	Application::Application()
 	{
-		EventBus::Initialize();
+		layerStack_.PushLayer(std::make_unique<CoreSystemsLayer>());
 
-		m_upWindow = Window::Create();
+		window_ = std::unique_ptr<Window>(Window::Create());
 
-		EventBus::Instance().RegisterListener<WindowCloseEvent>([this](WindowCloseEvent& event)
-		{
-			OnWindowClose(event);
-		});
-	}
-
-	Application::~Application()
-	{
-		EventBus::CleanUp();
+		EventBus::Instance().Subscribe<WindowCloseEvent>([this](WindowCloseEvent& event) { return OnWindowCloseEvent(event); }, 0);
 	}
 
 	void Application::Run()
 	{
-		m_IsRunning = true;
-
-		while (m_IsRunning)
+		while (running_)
 		{
-			EventBus::Instance().DispatchEvents();
-
-			glClearColor(1, 0, 1, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
-			m_upWindow->Update();
+			window_->Update();
+			for (auto& layer : layerStack_)
+			{
+				layer->Update();
+			}
 		}
 	}
 
-	void Application::OnEvent(Event& event)
+	void Application::PushLayer(std::unique_ptr<Layer> layer)
 	{
-		Logger::CoreInfo("{0}", event);
+		layerStack_.PushLayer(std::move(layer));
 	}
 
-	bool Application::OnWindowClose(WindowCloseEvent& event)
+	void Application::PushOverlayLayer(std::unique_ptr<Layer> layer)
 	{
-		m_IsRunning = false;
+		layerStack_.PushOverlayLayer(std::move(layer));
+	}
+
+	bool Application::OnWindowCloseEvent(WindowCloseEvent& event)
+	{
+		// Unused param
+		(void)event;
+
+		running_ = false;
+
 		return true;
 	}
 
-	void Application::PushLayer(Layer* layer)
-	{
-		m_LayerStack.PushLayer(layer);
-	}
-
-	void Application::PushOverlayLayer(Layer* layer)
-	{
-		m_LayerStack.PushOverlayLayer(layer);
-	}
 }

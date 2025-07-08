@@ -1,145 +1,122 @@
 #pragma once
-#include "Shmeckle\Core.h"
+#include <string>
+#include <functional>
+#include <queue>
+#include <memory>
+#include <iostream>
+#include <format>
 
-namespace shmeckle
+#include "Shmeckle/Core.h"
+
+namespace Shmeckle
 {
-	class SHMECKLE_API Event
+
+	// These types need to be implemented as an event
+	enum class EventType
+	{
+		None = 0,
+		WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,	// WindowEvent.h
+		KeyPressed, KeyReleased,												// KeyEvent.h
+		MousePressed, MouseReleased, MouseMoved, MouseScrolled					// MouseEvent.h
+	};
+
+	enum EventCategory
+	{
+		None = 0,							// 0000 0000
+		EventCategoryApplication = Bit(0),	// 0000 0001
+		EventCategoryInput = Bit(1),		// 0000 0010
+		EventCategoryKeyboard = Bit(2),		// 0000 0100
+		EventCategoryMouse = Bit(3),		// 0000 1000
+		EventCategoryWindow = Bit(4)		// 0001 0000
+	};
+
+	class SHM_API Event
 	{
 	public:
-		// These types need to be implemented as event classes
-		enum class Type
-		{
-			None = 0,
-			WindowClosed, WindowResized, WindowFocused, WindowLostFocus, WindowMoved, // Found in ApplicationEvent.h
-			KeyPressed, KeyReleased,                                                  // Found in KeyEvent.h
-			MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled        // Found in MouseEvent.h
-		};
+		~Event() = default;
 
-		// Look at 'Core.h' for the definition of Bit(x)
-		enum Category
-		{
-			None = 0,                          // 0000 0000
-			EventCategoryApplication = Bit(0), // 0000 0001
-			EventCategoryInput = Bit(1),       // 0000 0010
-			EventCategoryKeyboard = Bit(2),    // 0000 0100
-			EventCategoryMouse = Bit(3),       // 0000 1000
-			EventCategoryMouseButton = Bit(4)  // 0001 0000
-		};
+		Event(const Event& other) = delete;
+		Event(Event&& other) = delete;
+		Event& operator=(const Event& other) = delete;
+		Event& operator=(Event&& other) = delete;
 
-	public:
-		virtual ~Event() = default;
-
-		virtual Event::Type GetEventType() const = 0;
+		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
-
 		virtual std::string ToString() const { return GetName(); }
 
-		inline bool IsInCategory(Event::Category category) { return GetCategoryFlags() & category; }
+		inline bool IsInCategory(EventCategory category)
+		{
+			return GetCategoryFlags() & category;
+		}
+
+		static const unsigned int NUMBER_OF_TYPES_{ 11 }; // You should increment this for each new element type added
 
 	protected:
 		Event() = default;
 
-		Event(const Event& other) = delete;
-		Event& operator=(const Event& other) = delete;
-		Event(Event&& other) = delete;
-		Event& operator=(Event&& other) = delete;
-
-		bool m_Completed = false;
-
-	private:
-		friend class EventBus;
+		bool isHandled_{ false };
 	};
 
 	class EventBus
 	{
 	public:
-		static void Initialize();
-		static void CleanUp();
-
-		static EventBus& Instance();
-
-		using EventCallback = std::function<void(Event&)>;
-
-		struct EventCallbackWrapper 
-		{
-			int id; // Unique identifier for the callback
-			EventCallback callback;
-		};
-
-		template<typename EventClassType>
-		int RegisterListener(std::function<void(EventClassType&)> callback)
-		{
-			//static_assert(std::is_base_of<Event, EventClassType>::value, "EventClassType must derive from Event");
-
-			Event::Type type = EventClassType::GetStaticType();
-
-			int id = GenerateUniqueID();
-
-			// Wrap the specific callback into a generic one
-			EventCallback wrappedCallback = [callback](Event& baseEvent)
-			{
-				// Perform a runtime cast to ensure the baseEvent is of the correct type
-				EventClassType& specificEvent = static_cast<EventClassType&>(baseEvent);
-				callback(specificEvent);
-			};
-
-			m_Listeners[type].push_back({ id, wrappedCallback });
-			return id;
-		}
-
-		void UnregisterListener(Event::Type type, int id);
-
-		inline void QueueEvent(std::unique_ptr<Event> event) 
-		{
-			m_EventQueue.push(std::move(event));
-		}
-
-		void DispatchEvents();
-
-	private:
-		EventBus() = default;
 		~EventBus() = default;
 
-		int GenerateUniqueID();
+		EventBus(const EventBus& other) = delete;
+		EventBus(EventBus&& other) = delete;
+		EventBus& operator=(const EventBus& other) = delete;
+		EventBus& operator=(EventBus&& other) = delete;
 
-		std::unordered_map<Event::Type, std::vector<EventCallbackWrapper>> m_Listeners;
-		std::queue<std::unique_ptr<Event>> m_EventQueue;
-	};
+		SHM_API static void Initialize();
+		SHM_API static void CleanUp();
 
-	/*class EventDispatcher
-	{
-	public:
-		EventDispatcher(Event& event)
-			: m_Event(event)
-		{
+		SHM_API static EventBus& Instance();
 
-		}
-		~EventDispatcher() = default;
-
-		EventDispatcher(const EventDispatcher& other) = delete;
-		EventDispatcher& operator=(const EventDispatcher& other) = delete;
-		EventDispatcher(EventDispatcher&& other) = delete;
-		EventDispatcher& operator=(EventDispatcher&& other) = delete;
-
+		// layerIndex will be used to represent the priority
 		template<typename EventClassType>
-		bool Dispatch(std::function<bool(EventClassType&)> function)
+		SHM_API void Subscribe(std::function<bool(EventClassType&)> callback, int layerIndex)
 		{
-			if (m_Event.GetEventType() == EventClassType::GetStaticType())
+			static_assert(std::is_base_of<Event, EventClassType>::value, "\"EventClassType\" must be an Event");
+
+			auto wrapper
 			{
-				EventClassType& specificEvent = static_cast<EventClassType&>(m_Event);
-				m_Event.m_Completed = function(specificEvent);
-				return true;
-			}
-			return false;
+				[callback](Event& event)->bool
+				{
+					return callback(static_cast<EventClassType&>(event));
+				}
+			};
+
+			subscribers_[EventClassType::GetStaticType()].push_back({ layerIndex, wrapper });
+
+			SortType(EventClassType::GetStaticType());
 		}
+
+		// Queues the event to be dispatched later
+		SHM_API inline void QueueEvent(std::unique_ptr<Event> event)
+		{
+			eventQueue_.push(std::move(event));
+		}
+
+		SHM_API void DispatchAll();
+
+		// Imediately dispatches the given event
+		SHM_API void Dispatch(std::unique_ptr<Event> event);
+
 
 	private:
-		Event& m_Event;
-	};*/
+		struct Subscriber
+		{
+			int priority;
+			std::function<bool(Event&)> callback;
+		};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& event)
-	{
-		return os << event.ToString();
-	}
+		EventBus() = default;
+		void SortType(EventType type);
+
+		std::unordered_map<EventType, std::vector<Subscriber>> subscribers_;
+		std::queue<std::unique_ptr<Event>> eventQueue_;
+	};
+
 }
+

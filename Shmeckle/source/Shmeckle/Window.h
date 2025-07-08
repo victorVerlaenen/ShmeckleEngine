@@ -1,30 +1,21 @@
 #pragma once
+#include <memory>
+#include <string>
 
-#include "smpch.h"
 #include "Core.h"
-#include "Events/Event.h"
 
-namespace shmeckle
+namespace Shmeckle
 {
-	struct WindowProperties
-	{
-		WindowProperties(const std::string& title = "Shmeckle", unsigned int width = 1280, unsigned int height = 720)
-			:title{ title }
-			, width{ width }
-			, height{ height }
-		{
 
-		}
-
-		unsigned int width;
-		unsigned int height;
-		std::string title;
-	};
-
-	class SHMECKLE_API Window
+	class SHM_API Window
 	{
 	public:
 		virtual ~Window() = default;
+
+		Window(const Window& other) = delete;
+		Window(Window&& other) = delete;
+		Window& operator=(const Window& other) = delete;
+		Window& operator=(Window&& other) = delete;
 
 		virtual void Update() = 0;
 
@@ -34,15 +25,10 @@ namespace shmeckle
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		static std::unique_ptr<Window> Create(const WindowProperties& properties = WindowProperties());
+		static std::unique_ptr<Window> Create(const std::string& title = "Untitled window", unsigned int width = 1280, unsigned int height = 720);
+
 	protected:
 		Window() = default;
-
-		Window(const Window& other) = delete;
-		Window& operator=(const Window& other) = delete;
-		Window(Window&& other) = delete;
-		Window& operator=(Window&& other) = delete;
-
-		static bool sm_GLFWInitialized;
 	};
+
 }

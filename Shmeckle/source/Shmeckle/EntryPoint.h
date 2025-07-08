@@ -1,17 +1,15 @@
 #pragma once
+#include <memory>
 
-#ifdef SHMECKLE_PLATFORM_WINDOWS
+// This will be defined somewhere in a client application
+extern std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication();
 
-extern shmeckle::Application* shmeckle::CreateApplication();
-
-int main(int argc, char** argv)
+int main(int /*argc*/, char** /*argv*/)
 {
-	shmeckle::Logger::Initialize();
-	shmeckle::Logger::CoreInfo("Logger initialized.");
 
-	auto application = shmeckle::CreateApplication();
-	application->Run();
-	delete application;
+	auto upApp = Shmeckle::CreateApplication();
+	if (upApp)
+	{
+		upApp->Run();
+	}
 }
-
-#endif

@@ -1,20 +1,21 @@
-#include <Shmeckle.h>
+#include "Shmeckle.h"
 
-class Sandbox : public shmeckle::Application
+class SandboxApplication : public Shmeckle::Application
 {
 public:
-	Sandbox()
+	SandboxApplication() noexcept
+	{
+		Shmeckle::Logger::Info("Sandbox is being created...");
+	}
+
+	~SandboxApplication()
 	{
 
 	}
 
-	~Sandbox()
-	{
-
-	}
 };
 
-shmeckle::Application* shmeckle::CreateApplication()
+std::unique_ptr<Shmeckle::Application> Shmeckle::CreateApplication()
 {
-	return new Sandbox();
+	return std::make_unique<SandboxApplication>();
 }

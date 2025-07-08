@@ -1,0 +1,149 @@
+-- root
+
+workspace "Shmeckle" -- Is basicly the solution
+	architecture "x64"
+
+	configurations
+	{
+		"Analyze",
+		"Debug",
+		"Release",
+		"Dist"
+	}
+
+	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}" -- Look at the tokens page in the wiki
+
+
+---- Shmeckle --------------------------
+project "Shmeckle"
+	location "Shmeckle" -- This makes sure we are inside the "Shmeckle" folder
+	kind "SharedLib" -- Dynamic library
+	language "C++"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	pchheader "shmpch.h"
+	pchsource "%{prj.name}/source/shmpch.cpp" -- Visual studio needed
+
+	files
+	{
+		"%{prj.name}/source/**.h",
+		"%{prj.name}/source/**.cpp"
+	}
+
+	includedirs
+	{
+		"%{prj.name}/dependencies/spdlog/include",
+		"%{prj.name}/source"
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "On" -- This has to do with linking the runtime libs (We want to link them staticly)
+		systemversion "latest"
+
+		defines
+		{
+			"SHM_BUILD_DLL",
+			"SHM_USE_GLFW"
+		}
+
+		postbuildcommands
+		{
+			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox") -- Copies the Shmeckle dll into the Sandbox bin folder after building
+		}
+
+		buildoptions "/utf-8"
+
+	filter "configurations:Analyze"
+		runcodeanalysis "On"
+		buildoptions "/analyze:external-"
+		warnings "Extra"
+		externalwarnings "Default"
+		fatalwarnings "All"
+		vsprops { CodeAnalysisRuleSet = "../codeAnalysis/Shmeckle.ruleset" }
+		defines "SHM_ANALYZE"
+		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
+
+	filter "configurations:Debug"
+		warnings "Extra"
+		externalwarnings "Default"
+		defines "SHM_DEBUG"
+		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
+
+	filter "configurations:Release"
+		defines "SHM_RELEASE"
+		optimize "On"
+		staticruntime "Off"
+		runtime "Release"
+
+	filter "configurations:Dist"
+		defines "SHM_DIST"
+		optimize "On"
+		staticruntime "Off"
+		runtime "Release"
+
+---- Sandbox ------------------------------
+project "Sandbox"
+	location "Sandbox" 
+	kind "ConsoleApp" -- Executable
+	language "C++"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/source/**.h",
+		"%{prj.name}/source/**.cpp"
+	}
+
+	includedirs
+	{
+		"Shmeckle/source"
+	}
+
+	links
+	{
+		"Shmeckle"
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "On"
+		systemversion "latest"
+		buildoptions "/utf-8"
+
+	filter "configurations:Analyze"
+		runcodeanalysis "On"
+		warnings "Extra"
+		fatalwarnings "All"
+		vsprops { CodeAnalysisRuleSet = "../codeAnalysis/Shmeckle.ruleset" }
+		defines "SHM_ANALYZE"
+		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
+
+	filter "configurations:Debug"
+		warnings "Extra"
+		defines "SHM_DEBUG"
+		symbols "On"
+		staticruntime "Off"
+		runtime "Debug"
+
+	filter "configurations:Release"
+		defines "SHM_RELEASE"
+		optimize "On"
+		staticruntime "Off"
+		runtime "Release"
+
+	filter "configurations:Dist"
+		defines "SHM_DIST"
+		optimize "On"
+		staticruntime "Off"
+		runtime "Release"

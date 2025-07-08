@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform\Windows">
+      <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shmeckle">
+      <UniqueIdentifier>{D1135260-BDE0-AC6B-E6F9-9A13D225E2F9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shmeckle\Events">
+      <UniqueIdentifier>{952A1320-01B6-80E4-0AC7-03D976D1DCE4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Platform\Windows\Win32Window.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Platform\Windows\WindowsWindowGLFW.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle.h" />
+    <ClInclude Include="source\Shmeckle\Application.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Core.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\CoreSystemsLayer.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\EntryPoint.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\Event.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\KeyEvent.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\MouseEvent.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Events\WindowEvent.h">
+      <Filter>Shmeckle\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Layer.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\LayerStack.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Logger.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Shmeckle\Window.h">
+      <Filter>Shmeckle</Filter>
+    </ClInclude>
+    <ClInclude Include="source\shmpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Platform\Windows\Win32Window.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Platform\Windows\WindowsWindowGLFW.cpp">
+      <Filter>Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\Application.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\CoreSystemsLayer.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\Events\Event.cpp">
+      <Filter>Shmeckle\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\Layer.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\LayerStack.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Shmeckle\Logger.cpp">
+      <Filter>Shmeckle</Filter>
+    </ClCompile>
+    <ClCompile Include="source\shmpch.cpp" />
+  </ItemGroup>
+</Project>

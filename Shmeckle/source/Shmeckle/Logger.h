@@ -1,87 +1,94 @@
 #pragma once
-#include "Core.h"
-#include "spdlog\spdlog.h"
-#include "spdlog\fmt\ostr.h"
+#include <memory>
+#include <string>
+#include <format>
 
-namespace shmeckle
+#include "Core.h"
+
+namespace Shmeckle
 {
-	class SHMECKLE_API Logger
+
+	class Logger
 	{
 	public:
-		static void Initialize();
-		static void CleanUp();
+		SHM_API static void Initialize();
 
-		// Convenience functions for core logger
-		static inline void CoreTrace(const std::string& text) { s_CoreLogger->trace(text); }
-		template <typename... Args>
-		static inline void CoreTrace(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->trace(fmt, std::forward<Args>(args)...);
-		}
-		static inline void CoreInfo(const std::string& text) { s_CoreLogger->info(text); }
-		template <typename... Args>
- 		static inline void CoreInfo(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->info(fmt, std::forward<Args>(args)...);
-		}
-		static inline void CoreWarning(const std::string& text) { s_CoreLogger->warn(text); }
-		template <typename... Args>
-		static inline void CoreWarning(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->warn(fmt, std::forward<Args>(args)...);
-		}
-		static inline void CoreError(const std::string& text) { s_CoreLogger->error(text); }
-		template <typename... Args>
-		static inline void CoreError(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->error(fmt, std::forward<Args>(args)...);
-		}
-		static inline void CoreCritical(const std::string& text) { s_CoreLogger->critical(text); }
-		template <typename... Args>
-		static inline void CoreCritical(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->critical(fmt, std::forward<Args>(args)...);
+	private:
+		class Impl;
+		static std::unique_ptr<Impl> impl_;
+	
+	public:
+		SHM_API static void Trace(const std::string& text);
+		template<typename... Args>
+		static void Trace(std::string_view fmtStr, Args&&... args)
+		{
+			Trace(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
 		}
 
-		// Convenience functions for client logger
-		static inline void Trace(const std::string& text) { s_ClientLogger->trace(text); }
-		template <typename... Args>
-		static inline void Trace(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->trace(fmt, std::forward<Args>(args)...);
+		SHM_API static void Info(const std::string& text);
+		template<typename... Args>
+		static void Info(std::string_view fmtStr, Args&&... args)
+		{
+			Info(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
 		}
-		static inline void Info(const std::string& text) { s_ClientLogger->info(text); }
-		template <typename... Args>
-		static inline void Info(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->info(fmt, std::forward<Args>(args)...);
-		}
-		static inline void Warning(const std::string& text) { s_ClientLogger->warn(text); }
-		template <typename... Args>
-		static inline void Warning(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->warn(fmt, std::forward<Args>(args)...);
-		}
-		static inline void Error(const std::string& text) { s_ClientLogger->error(text); }
-		template <typename... Args>
-		static inline void Error(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->error(fmt, std::forward<Args>(args)...);
-		}
-		static inline void Critical(const std::string& text) { s_ClientLogger->critical(text); }
-		template <typename... Args>
-		static inline void Critical(spdlog::format_string_t<Args...> fmt, Args &&...args) {
-			s_CoreLogger->critical(fmt, std::forward<Args>(args)...);
+		
+		SHM_API static void Warning(const std::string& text);
+		template<typename... Args>
+		static void Warning(std::string_view fmtStr, Args&&... args)
+		{
+			Warning(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
 		}
 
-	protected:
-		Logger() = delete;
-		~Logger() = delete;
+		SHM_API static void Error(const std::string& text);
+		template<typename... Args>
+		static void Error(std::string_view fmtStr, Args&&... args)
+		{
+			Error(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
 
-		Logger(const Logger& other) = delete;
-		Logger& operator=(const Logger& other) = delete;
-		Logger(Logger&& other) = delete;
-		Logger& operator=(Logger&& other) = delete;
+		SHM_API static void Critical(const std::string& text);
+		template<typename... Args>
+		static void Critical(std::string_view fmtStr, Args&&... args)
+		{
+			Critical(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
 
-		static std::shared_ptr<spdlog::logger> s_CoreLogger;
-		static std::shared_ptr<spdlog::logger> s_ClientLogger;
+		// --------Core--------------------------------------
+		SHM_API static void InfoCore(const std::string& text);
+		template<typename... Args>
+		static void InfoCore(std::string_view fmtStr, Args&&... args)
+		{
+			InfoCore(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
+
+		SHM_API static void WarningCore(const std::string& text);
+		template<typename... Args>
+		static void WarningCore(std::string_view fmtStr, Args&&... args)
+		{
+			WarningCore(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
+
+		SHM_API static void ErrorCore(const std::string& text);
+		template<typename... Args>
+		static void ErrorCore(std::string_view fmtStr, Args&&... args)
+		{
+			ErrorCore(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
+
+		SHM_API static void TraceCore(const std::string& text);
+		template<typename... Args>
+		static void TraceCore(std::string_view fmtStr, Args&&... args)
+		{
+			TraceCore(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
+
+		SHM_API static void CriticalCore(const std::string& text);
+		template<typename... Args>
+		static void CriticalCore(std::string_view fmtStr, Args&&... args)
+		{
+			CriticalCore(std::vformat(fmtStr, std::make_format_args(std::forward<Args>(args)...)));
+		}
+
 	};
 
-	// Forward declarations for fmt
-	class Event;
 }
-
-// Tell fmt how to format user definedd types
-template <>
-struct fmt::formatter<shmeckle::Event> : fmt::ostream_formatter {};
