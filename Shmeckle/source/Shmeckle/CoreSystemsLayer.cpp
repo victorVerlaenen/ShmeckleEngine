@@ -26,7 +26,7 @@ namespace Shmeckle
 
 	void CoreSystemsLayer::Update()
 	{
-		Logger::InfoCore("Dispatching queued events...");
+		//Logger::InfoCore("Dispatching queued events...");
 		EventBus::Instance().DispatchAll();
 	}
 

@@ -12,8 +12,8 @@ namespace Shmeckle
 		Layer(const std::string& layerName = "Untitled");
 		virtual ~Layer();
 
-		Layer(const Layer& other) = delete;
-		Layer& operator=(const Layer& other) = delete;
+		Layer(const Layer& other) = default;
+		Layer& operator=(const Layer& other) = default;
 		Layer(Layer&& other) = default;
 		Layer& operator=(Layer&& other) = default;
 
