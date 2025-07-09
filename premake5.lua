@@ -46,7 +46,8 @@ project "Shmeckle"
 		defines
 		{
 			"SHM_BUILD_DLL",
-			"SHM_USE_GLFW"
+			--"SHM_USE_GLFW",
+			"SHM_USE_WIN32"
 		}
 
 		postbuildcommands

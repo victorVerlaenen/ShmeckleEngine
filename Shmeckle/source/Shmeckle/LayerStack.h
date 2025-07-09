@@ -11,7 +11,7 @@ namespace Shmeckle
 	class LayerStack
 	{
 	public:
-		LayerStack() = default;
+		LayerStack();
 		~LayerStack() = default;
 
 		LayerStack(const LayerStack& other) = delete;

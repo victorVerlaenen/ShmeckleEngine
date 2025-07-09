@@ -1,11 +1,16 @@
 #include "shmpch.h"
 #include "LayerStack.h"
 
+Shmeckle::LayerStack::LayerStack()
+{
+	layerInsertPoint_ = layers_.begin();
+}
+
 void Shmeckle::LayerStack::PushLayer(std::unique_ptr<Layer> layer)
 {
-	size_t index = std::distance(layers_.begin(), layerInsertPoint_);
-	layer->OnEnabled(index);
 	layerInsertPoint_ = layers_.emplace(layerInsertPoint_, std::move(layer));
+	size_t index = std::distance(layers_.begin(), layerInsertPoint_);
+	layers_.at(index)->OnEnabled(index);
 }
 
 void Shmeckle::LayerStack::RemoveLayer(std::unique_ptr<Layer> layer)
