@@ -16,7 +16,7 @@ namespace Shmeckle
 	{
 		layerStack_.PushLayer(std::make_unique<CoreSystemsLayer>());
 
-		window_ = std::unique_ptr<Window>(Window::Create());
+		window_ = std::unique_ptr<Window>(Window::Create("Shmeckle Engine"));
 
 		EventBus::Instance().Subscribe<WindowCloseEvent>([this](WindowCloseEvent& event) { return OnWindowCloseEvent(event); }, 0);
 	}
